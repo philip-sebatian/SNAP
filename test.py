@@ -8,7 +8,7 @@ while(curr!=None):
     curr=curr.front
 
 print("***************")
-obj.roll_back("acffb0d041a7ba3a21627b7ccc1809c1c7a2b6d2bcc8d38b4ea275e8c56959bc1960bb7f7accfc584b1bb8bfaa7b9e355595c25ae572c355d2162f7b2fec2b7b")
+obj.roll_back("4760358ac696cdf19b27a7b6c47f62e81dab9c0364da643517df4893b7f6383e")
 curr=obj.start
 while(curr!=None):
     print(curr.hash)

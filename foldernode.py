@@ -13,7 +13,7 @@ class Foldernode:
     
     #gets hash of each folder inside the folder node including itself
     def get_hash_folder(self):
-        hash_f=hashlib.new("sha512")
+        hash_f=hashlib.new("sha256")
         
         concar_s=''
         for i in self.files:
@@ -42,9 +42,9 @@ class Foldernode:
         return file_list,folder_list
         
 
-        
+
     #calculates hash of a file
-    def calculate_file_sha(self,file_path, algorithm='sha512'):
+    def calculate_file_sha(self,file_path, algorithm='sha256'):
         hash_function = hashlib.new(algorithm)
         with open(file_path, 'rb') as f:
             while chunk := f.read(4096):
