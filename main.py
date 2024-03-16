@@ -1,5 +1,5 @@
-from foldernode import Foldernode
-from graph import Graph_node,HistoryGraph
+
+from graph import Graph_node,HistoryGraph,Foldernode
 import pickle 
 import time
 
