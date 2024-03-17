@@ -50,6 +50,24 @@ class HistoryGraph:
             self.curr_branch=branch_name
             print(f"switched to branch {branch_name}")
     
+    
+    #returns and prints the current brach you are on 
+    def get_current_branch(self):
+        print(self.curr_branch)
+        return self.curr_branch
+    
+    
+    
+    def merge(self):
+        if self.curr_branch=="master":
+            print("you are in master already")
+            return 
+        self.branches["master"]=self.branches[self.curr_branch]
+        del self.branches[self.curr_branch]
+        print("merged current branch with master")
+        self.curr_branch="master"
+        print("swictched to master")
+        
 
 
 #strucrure of each of the foldernodes
@@ -101,3 +119,5 @@ class Foldernode:
             while chunk := f.read(4096):
                 hash_function.update(chunk)
         return hash_function.hexdigest()
+    
+    

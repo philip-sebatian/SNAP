@@ -43,6 +43,10 @@ while True:
 
 graph.switch_brach("master")
 print(graph.current.hash)
+graph.switch_brach("hellooooooo")
+graph.merge()
+print(graph.current.hash)
+
 
 
 
