@@ -93,11 +93,13 @@ int main(int argc, char * argv[]){
   while(i>0){
     action_stack[top]='r';
     printf("%s-%c\n","remove",word1[i-1]);
+    top++;
     i--;
   }
   while(j>0){
     action_stack[top]='a';
     printf("%s-%c\n","add",word2[j-1]);
+    top++;
     j--;
   }
 
@@ -107,5 +109,5 @@ int main(int argc, char * argv[]){
    printf("%c\n",action_stack[curr]);
    curr++;
  }
-
+ free(dp);
 }
