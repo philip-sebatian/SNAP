@@ -9,10 +9,12 @@ int main(int argc, char * argv[]){
   char * word2 = argv[2];
   int l1 = strlen(word1);
   int l2 = strlen(word2);
+  //dynamically allocates a 2d array for computation of dp
   int **dp=(int**)malloc((l1+1)*sizeof(int *));
   for(int i =0 ; i< l1+1;i++){
     dp[i]=(int*)malloc((l2+1)*sizeof(int *));
   }
+  //fills the base cases in the dp table and also fills other values with zeroes
   for(int i =0 ; i < l1+1;i++){
     for(int j=0 ; j < l2+1;j++){
       dp[i][j]=0;
@@ -27,12 +29,14 @@ int main(int argc, char * argv[]){
     dp[0][i]=i;
   }
   printf("\n");
+  //prints the dp table for debugging
   for(int i =0 ; i < l1+1;i++){
     for(int j=0 ; j < l2+1;j++){
       printf("%d\t",dp[i][j]);
     }
     printf("\n");
   }
+  //the dp loop for calculating distance of the strings
   for(int i =1; i<l1+1;i++){
     for(int j=1 ; j<l2+1;j++){
       if(word1[i]==word2[j]){
@@ -49,6 +53,7 @@ int main(int argc, char * argv[]){
       }
     }
   }
+
   printf("\n\n");
   for(int i =0 ; i < l1+1;i++){
     for(int j=0 ; j < l2+1;j++){
