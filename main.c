@@ -19,9 +19,10 @@ char * delete_letter(char * word ,int idx){
   int len = strlen(word);
   char *temp=(char *)malloc((len-1)*sizeof(char));
   int j=0;
-  for(int i =0; i < strlen(word)-1;i++){
+  for(int i =0; i < len;i++){
       if(i==idx)continue;
       temp[j]=word[i];
+      j++;
   }
   
   return temp;
@@ -97,7 +98,7 @@ actions * trace_actions(actions * action_stack,int **dp,char * word1,char * word
       if(dp[i-1][j]+1==dp[i][j] && i!=0){
         temp_action.action='r';
         temp_action.letter=word1[i-1];
-        temp_action.idx=i;
+        temp_action.idx=i-1;
         action_stack[top]=temp_action;
         printf("%s-%c\n","remove",word1[i-1]);
         i--;
@@ -123,7 +124,7 @@ actions * trace_actions(actions * action_stack,int **dp,char * word1,char * word
   printf("overrrrrrrrr\n");
   while(i>0){
     temp_action.action='r';
-    temp_action.idx=i;
+    temp_action.idx=i-1;
     temp_action.letter=word1[i-1];
     action_stack[top]=temp_action;
     printf("%s-%c\n","remove",word1[i-1]);
@@ -165,16 +166,24 @@ int main(int argc, char * argv[]){
   printf("\n\n");
  int curr =0 ;
  while(curr<top){
-  if(action_stack[curr].action=='r')
+  if(action_stack[curr].action=='r'){
    printf("%s %c %s %d\n","remove",action_stack[curr].letter,"at index",action_stack[curr].idx);
-   else
+  
+   word1=delete_letter(word1,action_stack[curr].idx);
+   
+   
+  }else{
    printf("%s %c %s %d\n","add",action_stack[curr].letter,"at index",action_stack[curr].idx);
-   curr++;
+   
+   word1=add_letter(word1,action_stack[curr].idx,action_stack[curr].letter);
+   
+  }curr++;
+  printf("%s\n",word1);
+  
  }
  
- word1=add_letter(word1,1,'q');
- word2=delete_letter(word2,1);
- printf("%s\n",word1);
- printf("%s\n",word2);
+ 
+ 
+
  free(dp);
 }
