@@ -9,43 +9,66 @@ int get_count(char *);
 char **get_files(char *);
 
 int **get_dp_file(char *, char *);
-char *delete_letter(char *, int);
-char *add_letter(char *, int, char);
+char **delete_letter(char **, int,char *);
+char **add_letter(char **, int, char*,char *);
+
+
+
 typedef struct act{
   char action;
   char *letter ;
   int idx;
 }actions;
+
+
+
 actions action_stack[1024];
+
+
 actions * get_action_stack(int size){
   actions * action_stack = (actions *)malloc(size*sizeof(actions));
   return action_stack;
 }
-char * delete_letter(char * word ,int idx){
-  int len = strlen(word);
-  char *temp=(char *)malloc((len-1)*sizeof(char));
+
+
+char ** delete_letter(char ** word ,int idx,char *fname){
+  int len = get_count(fname);
+  char **temp=(char **)malloc((len)*sizeof(char*));
   int j=0;
   for(int i =0; i < len;i++){
       if(i==idx)continue;
       temp[j]=word[i];
       j++;
   }
-  
+  free(word[idx]);
+  temp[j] = NULL;
   return temp;
 }
 
-char * add_letter(char * word,int idx,char c ){
-  int len = strlen(word);
-  char*temp=(char *)malloc((len+2)*sizeof(char));
-  strcpy(temp,word);
-  for(int i =len;i>idx;i--){
-    temp[i]=temp[i-1];
+
+
+
+char **add_letter(char ** word,int idx,char *c,char *fname){
+  int len = get_count(fname);
+  char**temp=(char **)malloc((len+2)*sizeof(char *));
+  if (temp == NULL) {
+        // Handle memory allocation failure
+        return NULL;
+    }
+  for(int i =0 ;i<len;i++){
+    temp[i]=strdup(word[i]);
+  }
+  for(int i =len+1;i>idx;i--){
+    temp[i]=strdup(temp[i-1]);
   }
   temp[idx]=c;
-  temp[len+1]='\0';
+  temp[len+1]=NULL;
   return temp;
 
 }
+
+
+
 //function for getting  the dp pointer
 int ** get_dp(char * word1,char *word2){
   int l1 = strlen(word1);
@@ -88,6 +111,8 @@ int ** get_dp(char * word1,char *word2){
   return dp;
 
 }
+
+
 
 
 int ** get_dp_file(char *word1,char *word2){
@@ -135,6 +160,10 @@ int ** get_dp_file(char *word1,char *word2){
   return dp;
 
 }
+
+
+
+
 
 //for tracing actions on action stack array dynamically alocated by actions
 actions * trace_actions(actions * action_stack,int **dp,char **word1,char **word2,char *v1,char *v2){
@@ -198,6 +227,11 @@ actions * trace_actions(actions * action_stack,int **dp,char **word1,char **word
   }
   return action_stack;
 }
+
+
+
+
+
 //main point
 int main(int argc, char * argv[]){
   actions *action_stack=get_action_stack(1024);
@@ -224,21 +258,27 @@ int main(int argc, char * argv[]){
   if(action_stack[curr].action=='r'){
    printf("%s %s %s %d\n","remove",action_stack[curr].letter,"at index",action_stack[curr].idx);
   
-   word1=delete_letter(word1,action_stack[curr].idx);
+   f1=delete_letter(f1,action_stack[curr].idx,word1);
    
    
   }else{
    printf("%s %s %s %d\n","add",action_stack[curr].letter,"at index",action_stack[curr].idx);
    
-   word1=add_letter(word1,action_stack[curr].idx,action_stack[curr].letter);
+   f1=add_letter(f1,action_stack[curr].idx,action_stack[curr].letter,word1);
    
-  }curr++;
-  printf("%s\n",word1);
+  }
+  curr++;
   
  }*/
- 
+
+
+ f1=delete_letter(f1,3,word1);
+ f1=add_letter(f1,0,"jjjjjjjjjj\n",word1);
  
  
 
+for (int i = 0; f1[i] != NULL; i++) {
+        printf("%s\n", f1[i]);
+    }
  free(dp);
 }
