@@ -17,7 +17,7 @@ class actions{
 };
 
 //deque to store the actions
-std::deque<actions> stk;
+
 std::vector<std::string> add_line(std::vector<std::string>&,std::string ,int );
 std::vector<std::string> delete_line(std::vector<std::string>&,int);
 //calculates the dp for diff
@@ -56,8 +56,9 @@ std::vector<std::vector<int>> calc(std::vector<std::string> s1,std::vector <std:
 
 
 //gets the actions needed to be performed
-
-void get_actions(std::vector<std::vector<int>>&dp,std::vector<std::string> &s1,std::vector<std::string> &s2){
+//s1 is the line that is to be changed and s2 is the line that is to be searched to 
+std::deque<actions> get_actions(std::vector<std::vector<int>>&dp,std::vector<std::string> &s1,std::vector<std::string> &s2){
+    std::deque<actions> stk;
     int i =s1.size();
     int j =s2.size();
     while(i>0 && j>0){
@@ -67,25 +68,26 @@ void get_actions(std::vector<std::vector<int>>&dp,std::vector<std::string> &s1,s
         }
         else if(dp[i-1][j]+1==dp[i][j]){
             
-            stk.push_back(actions(s1[i-1],i-1,"remove"));
+            stk.push_back(actions(s1[i-1],i-1,"-"));
             i--;
         }
         else{
-            stk.push_back(actions(s2[j-1],i,"add"));
+            stk.push_back(actions(s2[j-1],i,"+"));
             j--;
         }
         
     }
     while(i>0){
-        stk.push_back(actions(s1[i-1],i-1,"remove"));
+        stk.push_back(actions(s1[i-1],i-1,"-"));
         i--;
     }
     while(j>0){
-        stk.push_back(actions(s2[j-1],i,"add"));
+        stk.push_back(actions(s2[j-1],i,"+"));
         j--;
     }
-    while(!stk.empty()){
+    /*while(!stk.empty()){
         std::cout<<stk.front().action<<" "<<stk.front().letter<<" at index-"<<stk.front().idx<<std::endl;
+        
         if(stk.front().action=="remove"){
             delete_line(s1,stk.front().idx);
         }
@@ -93,7 +95,8 @@ void get_actions(std::vector<std::vector<int>>&dp,std::vector<std::string> &s1,s
             add_line(s1,stk.front().letter,stk.front().idx);
         }
         stk.pop_front();
-    }
+    }*/
+    return stk;
 }
 
 
@@ -111,6 +114,7 @@ std::vector<std::string> get_content(std::string fname){
    return lines;
 
 }
+//adds line from content vector
 std::vector<std::string> add_line(std::vector<std::string>&file_content,std::string s1,int idx){
     std::vector<std::string> temp;
     bool flg=false;
@@ -119,17 +123,22 @@ std::vector<std::string> add_line(std::vector<std::string>&file_content,std::str
             
             if(!flg){
                 temp.push_back(s1);
-                i--;
+                
+                flg=true;
+                
                 }
-            flg=true;
-            continue;
+            
+            
         }
         temp.push_back(file_content[i]);
+    }
+    if (!flg) {
+        temp.push_back(s1); 
     }
     file_content=temp;
     return file_content;
 }
-
+//deltes line from content vector 
 std::vector<std::string> delete_line(std::vector<std::string>&file_content,int idx){
     std::vector<std::string> temp;
     for(int i =0 ; i < file_content.size();i++){
@@ -141,21 +150,65 @@ std::vector<std::string> delete_line(std::vector<std::string>&file_content,int i
     file_content=temp;
     return file_content;
 }
+//recontructs the the action deque from the delta file with name equals fname 
+std::deque<actions> reconstruct_delta_file(std::string fname){
+    std::deque<actions> stk;
+    std:: fstream ff ;
+    ff.open(fname,std::ios::out|std::ios::in);
+    std::string str ;
+    std::string temp_line;
+    int idx;
+    std::string action;
+    while(getline(ff,str)){
+        temp_line=str.substr(3);
+        action=str[0];
+        idx=str[1];
+        
+        stk.push_back(actions(temp_line,idx-'0',action));
+   }
+   return stk;
+}
+//takes in the action dequeue and writes delta file with the name passed in the parameter fname
+void write_delta_from_actionstk(std::string fname,std::deque<actions>stk){
+    std:: fstream ff ;
+    ff.open(fname,std::ios::out|std::ios::trunc);
+    std::string str ;
+    while(!stk.empty()){
+        str=stk.front().action+std::to_string(stk.front().idx)+stk.front().letter+"\n";
+        stk.pop_front();
+        ff<<str;
+    }
+    ff.close();
+    std::cout<<"finished writing"<<std::endl;
+}
+void write_delta_from_file_name(std::string f1,std::string f2,std::string delta){
+    std::vector<std::string> lines1;
+    std::vector<std::string> lines2;
+    lines1=get_content(f1);
+    lines2=get_content(f2);
+    std::vector<std::vector<int>> dp =calc(lines1,lines2);
+    std::deque<actions> ssk=get_actions(dp,lines1,lines2);
+    write_delta_from_actionstk(delta,ssk);
+}
+
 
 int main()
 {
    
    
-   std ::string str ;
+   /*std ::string str ;
    std::vector<std::string> lines1;
    std::vector<std::string> lines2;
    lines1=get_content("hello.txt");
    lines2=get_content("new.txt");
-   std::vector<std::vector<int>> dp =calc(lines1,lines2);
-   get_actions(dp,lines1,lines2);
-   for(auto i : lines1){
-    std::cout<<i<<std::endl;
-   }
+  // std::vector<std::vector<int>> dp =calc(lines1,lines2);
+   //write_delta("delta.txt",get_actions(dp,lines1,lines2));
+   std::cout<<lines1.size()<<std::endl;
+   std::deque<actions> dd=reconstruct_delta_file("delta.txt");
+   for(auto i : dd){
+    std::cout<<i.action<<" "<<i.idx<<" "<<i.letter<<std::endl;
+   }*/
+   write_delta_from_file_name("hello.txt","new.txt","delta2.txt");
    
    
 
