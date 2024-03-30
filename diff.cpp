@@ -215,10 +215,31 @@ void write_delta_from_file_name(std::string f1,std::string f2,std::string delta)
     write_delta_from_actionstk(delta,ssk);
 }
 
+void create_change(std::set<fs::path> file_s){
+    std::set<fs::path> c_flst;
+    traverse(fs::current_path(),c_flst);
+    for(auto i :file_s){
+        if(c_flst.find(i)==c_flst.end()){
+            if (!fs::exists(fs::path(i).parent_path())) {
+            fs::create_directories(fs::path(i).parent_path());
+    }
+        }
+    }
 
+    for(auto i : c_flst){
+        if(file_s.find(i)==file_s.end()){
+            if(fs::exists(fs::path(i))){
+                fs::remove_all(i);
+            }
+        }
+    }
+
+}
 int main()
 {
-   write_delta_from_file_name("he;lo.txt","new.txt","delta3.txt");
+   //write_delta_from_file_name("he;lo.txt","new.txt","delta3.txt");
    write_fs_delta("file.txt");
+   auto i = get_fs("file.txt");
+   create_change(i);
 
 }
