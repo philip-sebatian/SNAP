@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
 #include <fstream>
+#include "file.cpp"
 //class for the actions
 
 
@@ -85,17 +86,6 @@ std::deque<actions> get_actions(std::vector<std::vector<int>>&dp,std::vector<std
         stk.push_back(actions(s2[j-1],i,"+"));
         j--;
     }
-    /*while(!stk.empty()){
-        std::cout<<stk.front().action<<" "<<stk.front().letter<<" at index-"<<stk.front().idx<<std::endl;
-        
-        if(stk.front().action=="remove"){
-            delete_line(s1,stk.front().idx);
-        }
-        else{
-            add_line(s1,stk.front().letter,stk.front().idx);
-        }
-        stk.pop_front();
-    }*/
     return stk;
 }
 
@@ -151,6 +141,21 @@ std::vector<std::string> delete_line(std::vector<std::string>&file_content,int i
     return file_content;
 }
 //recontructs the the action deque from the delta file with name equals fname 
+std::vector<std::string> get_fs(std::string delta){
+    std:: fstream ff ;
+    ff.open(delta,std::ios::out|std::ios::in);
+    std::string strbuffer;
+    getline(ff,strbuffer);
+    std::string str =strbuffer.substr(3);
+    std::vector<std::string> tokens;
+    std::istringstream iss(str);
+    std::string token;
+    while (std::getline(iss, token, ',')) {
+        tokens.push_back(token);
+    }
+    return tokens;
+
+}
 std::deque<actions> reconstruct_delta_file(std::string fname){
     std::deque<actions> stk;
     std:: fstream ff ;
@@ -159,6 +164,8 @@ std::deque<actions> reconstruct_delta_file(std::string fname){
     std::string temp_line;
     int idx;
     std::string action;
+    getline(ff,str);
+    std::string filestr=str.substr(3);
     while(getline(ff,str)){
         temp_line=str.substr(3);
         action=str[0];
@@ -170,9 +177,17 @@ std::deque<actions> reconstruct_delta_file(std::string fname){
 }
 //takes in the action dequeue and writes delta file with the name passed in the parameter fname
 void write_delta_from_actionstk(std::string fname,std::deque<actions>stk){
+    std::set<std::filesystem::path> filestruct ;
+    traverse(std::filesystem::current_path(),filestruct);
+    std::string fss="$";
+    for(auto i :filestruct){
+        fss+=","+i.string();
+    }
+    fss+="\n";
     std:: fstream ff ;
     ff.open(fname,std::ios::out|std::ios::trunc);
     std::string str ;
+    ff<<fss;
     while(!stk.empty()){
         str=stk.front().action+std::to_string(stk.front().idx)+stk.front().letter+"\n";
         stk.pop_front();
@@ -208,7 +223,10 @@ int main()
    for(auto i : dd){
     std::cout<<i.action<<" "<<i.idx<<" "<<i.letter<<std::endl;
    }*/
-   write_delta_from_file_name("hello.txt","new.txt","delta2.txt");
+   write_delta_from_file_name("hello.txt","new.txt","delta3.txt");
+   for(auto i : get_fs("delta3.txt")){
+    std::cout<<i<<"\n";
+   }
    
    
 

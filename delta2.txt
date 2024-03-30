@@ -1,3 +1,4 @@
+$,/home/ubuntu/gitwithc/.git,/home/ubuntu/gitwithc/.hex,/home/ubuntu/gitwithc/.vscode,/home/ubuntu/gitwithc/a.out,/home/ubuntu/gitwithc/delta.txt,/home/ubuntu/gitwithc/delta2.txt,/home/ubuntu/gitwithc/diff.cpp,/home/ubuntu/gitwithc/file.cpp,/home/ubuntu/gitwithc/hello,/home/ubuntu/gitwithc/hello.txt,/home/ubuntu/gitwithc/new.txt,/home/ubuntu/gitwithc/noob
 -3adskn
 -2sanlkdakndasnldasdas
 -1sadnkjasndksjank

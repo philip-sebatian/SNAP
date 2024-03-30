@@ -1,0 +1,9 @@
+$,/home/ubuntu/gitwithc/a.out,/home/ubuntu/gitwithc/delta.txt,/home/ubuntu/gitwithc/delta2.txt,/home/ubuntu/gitwithc/delta3.txt,/home/ubuntu/gitwithc/diff.cpp,/home/ubuntu/gitwithc/file.cpp,/home/ubuntu/gitwithc/hello,/home/ubuntu/gitwithc/hello.txt,/home/ubuntu/gitwithc/new.txt,/home/ubuntu/gitwithc/noob,/home/ubuntu/gitwithc/noob/shda,/home/ubuntu/gitwithc/noob/shda/askbdsjb.txt,/home/ubuntu/gitwithc/noob/world.txt
+-3adskn
+-2sanlkdakndasnldasdas
+-1sadnkjasndksjank
+-0sadnkjasndksjank
++0dshvdb
++0eahvhsbjasdnkd
++0sdfkJN
++0fdbsEKJf
