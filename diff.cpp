@@ -146,7 +146,7 @@ std::set<fs::path> get_fs(std::string delta){
     ff.open(delta,std::ios::out|std::ios::in);
     std::string strbuffer;
     getline(ff,strbuffer);
-    std::string str =strbuffer.substr(3);
+    std::string str =strbuffer.substr(2);
     std::set<fs::path> tokens;
     std::istringstream iss(str);
     std::string token;
@@ -164,10 +164,9 @@ std::deque<actions> reconstruct_delta_file(std::string fname){
     std::string temp_line;
     int idx;
     std::string action;
-    getline(ff,str);
-    std::string filestr=str.substr(3);
+    
     while(getline(ff,str)){
-        temp_line=str.substr(3);
+        temp_line=str.substr(2);
         action=str[0];
         idx=str[1];
         
@@ -244,7 +243,10 @@ int main()
 {
    //write_delta_from_file_name("he;lo.txt","new.txt","delta3.txt");
    //write_fs_delta("file.txt");
-   auto i = get_fs("file.txt");
-   create_change(i);
-
+   //auto i = get_fs("file.txt");
+    //create_change(i);
+    auto i = reconstruct_delta_file("delta3.txt");
+    for(auto j :i){
+        std::cout<<j.letter<<"\n";
+    }
 }

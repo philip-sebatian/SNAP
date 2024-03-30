@@ -1,1 +1,1 @@
-$,a.out,delta.txt,delta3.txt,diff.cpp,file.cpp,file.txt,hello.txt,hello4,hello4/d,new.txt
+$$a.out,delta.txt,delta3.txt,diff.cpp,file.cpp,file.txt,hello.txt,hello4,hello4/d,new.txt
