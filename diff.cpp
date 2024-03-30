@@ -2,7 +2,7 @@
 #include <fstream>
 #include "file.cpp"
 //class for the actions
-
+namespace fs = std::filesystem;
 
 class actions{
     
@@ -141,17 +141,17 @@ std::vector<std::string> delete_line(std::vector<std::string>&file_content,int i
     return file_content;
 }
 //recontructs the the action deque from the delta file with name equals fname 
-std::vector<std::string> get_fs(std::string delta){
+std::set<fs::path> get_fs(std::string delta){
     std:: fstream ff ;
     ff.open(delta,std::ios::out|std::ios::in);
     std::string strbuffer;
     getline(ff,strbuffer);
     std::string str =strbuffer.substr(3);
-    std::vector<std::string> tokens;
+    std::set<fs::path> tokens;
     std::istringstream iss(str);
     std::string token;
     while (std::getline(iss, token, ',')) {
-        tokens.push_back(token);
+        tokens.insert(fs::path(token));
     }
     return tokens;
 
@@ -175,8 +175,7 @@ std::deque<actions> reconstruct_delta_file(std::string fname){
    }
    return stk;
 }
-//takes in the action dequeue and writes delta file with the name passed in the parameter fname
-void write_delta_from_actionstk(std::string fname,std::deque<actions>stk){
+void write_fs_delta(std::string delta){
     std::set<std::filesystem::path> filestruct ;
     traverse(std::filesystem::current_path(),filestruct);
     std::string fss="$";
@@ -185,9 +184,19 @@ void write_delta_from_actionstk(std::string fname,std::deque<actions>stk){
     }
     fss+="\n";
     std:: fstream ff ;
-    ff.open(fname,std::ios::out|std::ios::trunc);
+    ff.open(delta,std::ios::out|std::ios::trunc);
     std::string str ;
     ff<<fss;
+    ff.seekg(0);
+}
+//takes in the action dequeue and writes delta file with the name passed in the parameter fname
+void write_delta_from_actionstk(std::string fname,std::deque<actions>stk){
+    std::set<std::filesystem::path> filestruct ;
+    
+    std:: fstream ff ;
+    ff.open(fname,std::ios::out|std::ios::trunc);
+    std::string str ;
+    
     while(!stk.empty()){
         str=stk.front().action+std::to_string(stk.front().idx)+stk.front().letter+"\n";
         stk.pop_front();
@@ -209,26 +218,7 @@ void write_delta_from_file_name(std::string f1,std::string f2,std::string delta)
 
 int main()
 {
-   
-   
-   /*std ::string str ;
-   std::vector<std::string> lines1;
-   std::vector<std::string> lines2;
-   lines1=get_content("hello.txt");
-   lines2=get_content("new.txt");
-  // std::vector<std::vector<int>> dp =calc(lines1,lines2);
-   //write_delta("delta.txt",get_actions(dp,lines1,lines2));
-   std::cout<<lines1.size()<<std::endl;
-   std::deque<actions> dd=reconstruct_delta_file("delta.txt");
-   for(auto i : dd){
-    std::cout<<i.action<<" "<<i.idx<<" "<<i.letter<<std::endl;
-   }*/
-   write_delta_from_file_name("hello.txt","new.txt","delta3.txt");
-   for(auto i : get_fs("delta3.txt")){
-    std::cout<<i<<"\n";
-   }
-   
-   
-
+   write_delta_from_file_name("he;lo.txt","new.txt","delta3.txt");
+   write_fs_delta("file.txt");
 
 }
