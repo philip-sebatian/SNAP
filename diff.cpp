@@ -210,6 +210,9 @@ void write_delta_from_file_name(std::string f1,std::string f2,std::string delta)
     lines1=get_content(f1);
     lines2=get_content(f2);
     std::vector<std::vector<int>> dp =calc(lines1,lines2);
+    if(dp[lines1.size()][lines2.size()]==0){
+        return;
+    }
     std::deque<actions> ssk=get_actions(dp,lines1,lines2);
     write_delta_from_actionstk(delta,ssk);
 }

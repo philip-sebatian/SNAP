@@ -35,6 +35,8 @@ class Treeobject{
             std::string stage_file= stage_path / f_path.filename();
             std::string hash = computeSHA256(f_path);
             fs::path diff_base=fs::current_path()/fs::path(".diff");
+            fs::path file_struct_path=fs::current_path()/fs::path(".file");
+            write_fs_delta(file_struct_path/fs::path("files.txt"));
             write_delta_from_file_name(stage_file,f_path,diff_base/fs::path(f_path.filename().string()+".txt"));
             
             fb.insert(file_blob(diff_base/fs::path(hash+".txt"),hash));
