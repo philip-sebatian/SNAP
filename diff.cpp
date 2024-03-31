@@ -239,7 +239,7 @@ void create_change(std::set<fs::path> file_s){
     }
 
 }
-int main()
+/*int main()
 {
    //write_delta_from_file_name("he;lo.txt","new.txt","delta3.txt");
    //write_fs_delta("file.txt");
@@ -249,4 +249,4 @@ int main()
     for(auto j :i){
         std::cout<<j.letter<<"\n";
     }
-}
+}*/
