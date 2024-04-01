@@ -2,7 +2,7 @@
 #include <bits/stdc++.h>
 namespace fs = std::filesystem;
 
-// Function to traverse a folder and construct its structure
+// Function to traverse a folder and construct its structure in set ..relative to root
 void traverse(const fs::path& root,std::set<fs::path>& filestruct) {
     
     for (const auto& entry : fs::directory_iterator(root)) {
