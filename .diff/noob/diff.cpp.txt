@@ -9,13 +9,14 @@
 +0   //write_delta_from_file_name("he;lo.txt","new.txt","delta3.txt");
 +0{
 +0/*int main()
++0
 +0}
 +0
 +0    }
 +0        }
 +0            
-+0                fs::remove_all(fs::current_path()/i);
-+0                std::cout<<"remove "<<i<<"\n";
++0                fs::remove_all(base/i);
++0                std::cout<<"remove "<<base/i<<"\n";
 +0        if(file_s.find(i)==file_s.end()){
 +0        std::cout<<"conetnt B "<<i<<"\n";
 +0    for(const auto &i : c_flst){
@@ -24,16 +25,21 @@
 +0        }
 +0            }
 +0                }
-+0                    fs::create_directories(fs::current_path() / i);
-+0                    std::cout<<"add "<<i<<"\n";
-+0                if(!fs::exists(fs::current_path()/i)){
-+0            if(fs::is_directory(fs::current_path()/i)){
++0                    fs::create_directories(base / i);
++0                    std::cout<<"add "<<base/i<<"\n";
++0                if(!fs::exists(base/i)){
++0                std::cout<<"laaaaaaaaaa"<<std::endl;
++0            if(fs::is_directory(i)){
 +0        if(c_flst.find(i)==c_flst.end()){
 +0        std::cout<<"contents "<<i<<"\n";
 +0    for(const auto &i :file_s){
-+0    traverse(fs::current_path(),c_flst);
++0    }*/
++0
++0        std::cout<<i<<"laaaa"<<std::endl;
++0    /*for(auto i :file_s){
++0    traverse(base,c_flst);
 +0    std::set<fs::path> c_flst;
-+0void create_change(std::set<fs::path> file_s){
++0void create_change(std::set<fs::path> file_s,fs::path base){
 +0
 +0}
 +0    write_delta_from_actionstk(delta,ssk);

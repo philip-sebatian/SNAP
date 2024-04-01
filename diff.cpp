@@ -216,17 +216,23 @@ void write_delta_from_file_name(std::string f1,std::string f2,std::string delta)
     std::deque<actions> ssk=get_actions(dp,lines1,lines2);
     write_delta_from_actionstk(delta,ssk);
 }
+//base in the foledr in which the changes will be reflected
 
-void create_change(std::set<fs::path> file_s){
+void create_change(std::set<fs::path> file_s,fs::path base){
     std::set<fs::path> c_flst;
-    traverse(fs::current_path(),c_flst);
+    traverse(base,c_flst);
+    /*for(auto i :file_s){
+        std::cout<<i<<"laaaa"<<std::endl;
+
+    }*/
     for(const auto &i :file_s){
         std::cout<<"contents "<<i<<"\n";
         if(c_flst.find(i)==c_flst.end()){
-            if(fs::is_directory(fs::current_path()/i)){
-                if(!fs::exists(fs::current_path()/i)){
-                    std::cout<<"add "<<i<<"\n";
-                    fs::create_directories(fs::current_path() / i);
+            if(fs::is_directory(i)){
+                std::cout<<"laaaaaaaaaa"<<std::endl;
+                if(!fs::exists(base/i)){
+                    std::cout<<"add "<<base/i<<"\n";
+                    fs::create_directories(base / i);
                 }
             }
         }
@@ -235,13 +241,14 @@ void create_change(std::set<fs::path> file_s){
     for(const auto &i : c_flst){
         std::cout<<"conetnt B "<<i<<"\n";
         if(file_s.find(i)==file_s.end()){
-                std::cout<<"remove "<<i<<"\n";
-                fs::remove_all(fs::current_path()/i);
+                std::cout<<"remove "<<base/i<<"\n";
+                fs::remove_all(base/i);
             
         }
     }
 
 }
+
 /*int main()
 {
    //write_delta_from_file_name("he;lo.txt","new.txt","delta3.txt");

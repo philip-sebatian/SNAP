@@ -1,6 +1,10 @@
 +0}
++0    tee.make_fs();
++0    }
++0        std::cout<<i.filepath<<std::endl;
++0    for(auto i : tee.fb){
 +0    traverse_make_tree_obj(fs::current_path(),tee);
-+0    Treeobject tee = Treeobject("hello");
++0    Treeobject tee = Treeobject();
 +0int main(){
 +0
 +0
@@ -8,6 +12,17 @@
 +0};
 +0
 +0
++0    }
++0        
++0        }
++0
++0
++0             branches[current_branch]=head;
++0             head = std::make_shared<Treeobject>();
++0        if(head==nullptr){
++0    void snapshot(std::string snap_name){
++0
++0    std::string current_branch="master";
 +0    std::unordered_map <std::string,std::shared_ptr<Treeobject>> branches;
 +0    std::shared_ptr<Treeobject> head;
 +0class Tree{
@@ -21,7 +36,8 @@
 +0                traverse_make_tree_obj(entry.path(),tee);
 +0            if(entry.path().filename().string()[0]!='.'){
 +0        if(fs::is_directory(entry)){
-+0        tee.insert_blob(entry.path());
++0        tee.insert_blob(entry.path(),"noob");
++0        if(fs::is_regular_file(entry))
 +0        std::cout<<entry.path()<<std::endl;
 +0    for (const auto& entry : fs::directory_iterator(root)) {
 +0    
@@ -29,26 +45,35 @@
 +0
 +0};
 +0
++0
 +0        }
-+0            fb.insert(file_blob(diff_base/fs::path(hash+".txt"),hash));
++0            create_change(fs_set,fs::current_path()/fs::path(".stage"));
++0            auto fs_set =get_fs(fs::current_path()/ fs::path(".file")/fs::path(commit_name+".txt"));
++0        void make_fs(){
++0        }
++0            fb.insert(file_blob(fs::relative(f_path,fs::current_path()),diff_base/fs::path(f_path.string()+".txt")));
 +0            
 +0            write_delta_from_file_name(stage_file,f_path,diff_base/fs::path(f_path.filename().string()+".txt"));
-+0            write_fs_delta(file_struct_path/fs::path("files.txt"));
++0            write_fs_delta(file_struct_path/fs::path(commit_name+".txt"));
 +0            fs::path file_struct_path=fs::current_path()/fs::path(".file");
-+0            fs::path diff_base=fs::current_path()/fs::path(".diff");
++0            }
++0                fs::create_directories(diff_base);
++0            if(!fs::exists(diff_base)){
++0            fs::path diff_base=fs::current_path()/fs::path(".diff")/fs::path(commit_name);
++0            this->commit_name=commit_name;
 +0            std::string hash = computeSHA256(f_path);
 +0            std::string stage_file= stage_path / f_path.filename();
 +0            std::string stage_path=f_path.parent_path()/fs::path(".stage");//this acts as base to the stage file change it 
-+0        void insert_blob(fs::path f_path){
++0        void insert_blob(fs::path f_path,std::string commit_name){
 +0        }
 +0
 +0            this->next =nullptr;
-+0            this->message= message;
 +0            
-+0        Treeobject(std:: string message){
++0            
++0        Treeobject(){
 +0
 +0        std:: shared_ptr<Treeobject> next;
-+0        std::string message;
++0        std::string commit_name;
 +0        std::set<file_blob> fb;
 +0       
 +0    public: 
@@ -59,10 +84,11 @@
 +0        return filepath < other.filepath;
 +0        bool operator<(const file_blob& other) const {
 +0        }
-+0            this->hash = hash;
++0            
++0            this->f_name=f_name;
 +0            this->filepath=f_path;
-+0        file_blob(std::string f_path,std::string hash){
-+0        std::string hash;
++0        file_blob(std::string f_path,std::string f_name){
++0        std:: string f_name ;
 +0        fs::path filepath;
 +0    public:
 +0class file_blob{

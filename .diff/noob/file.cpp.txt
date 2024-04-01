@@ -1,15 +1,13 @@
 +0
 +0
 +0}
-+0    
-+0    
-+0    }
++0    }   
 +0        }
 +0            }
 +0                traverse(entry,filestruct);
 +0            if(entry.path().filename().string()[0]!='.'){
 +0        if(fs::is_directory(entry)){
-+0        filestruct.insert(fs::relative( entry,fs::current_path()));
++0        filestruct.insert(fs::relative( entry,root));
 +0        if(entry.path().filename().string()[0]!='.')
 +0    for (const auto& entry : fs::directory_iterator(root)) {
 +0    

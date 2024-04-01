@@ -7,15 +7,13 @@ void traverse(const fs::path& root,std::set<fs::path>& filestruct) {
     
     for (const auto& entry : fs::directory_iterator(root)) {
         if(entry.path().filename().string()[0]!='.')
-        filestruct.insert(fs::relative( entry,fs::current_path()));
+        filestruct.insert(fs::relative( entry,root));
         if(fs::is_directory(entry)){
             if(entry.path().filename().string()[0]!='.'){
                 traverse(entry,filestruct);
             }
         }
-    }
-    
-    
+    }   
 }
 
 
