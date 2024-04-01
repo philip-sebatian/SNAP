@@ -47,13 +47,21 @@
 +0
 +0
 +0        }
++0            }
++0                
++0                
++0                write_vector(vec,fs::current_path()/fs::path(".stage")/i.filepath);
++0                auto vec =get_vector_from_delta(i.filepath.filename());
++0                std::cout<<i.filepath<<std::endl;
++0            for(auto i : fb){
 +0            create_change(fs_set,fs::current_path()/fs::path(".stage"));
 +0            auto fs_set =get_fs(fs::current_path()/ fs::path(".file")/fs::path(commit_name+".txt"));
 +0        void make_fs(){
 +0        }
-+0            fb.insert(file_blob(fs::relative(f_path,fs::current_path()),diff_base/fs::path(f_path.string()+".txt")));
++0            fb.insert(file_blob(fs::relative(f_path,fs::current_path()),diff_base/fs::path(f_path.filename().string()+".txt")));
 +0            
 +0            write_delta_from_file_name(stage_file,f_path,diff_base/fs::path(f_path.filename().string()+".txt"));
++0            
 +0            write_fs_delta(file_struct_path/fs::path(commit_name+".txt"));
 +0            fs::path file_struct_path=fs::current_path()/fs::path(".file");
 +0            }
@@ -65,6 +73,35 @@
 +0            std::string stage_file= stage_path / f_path.filename();
 +0            std::string stage_path=f_path.parent_path()/fs::path(".stage");//this acts as base to the stage file change it 
 +0        void insert_blob(fs::path f_path,std::string commit_name){
++0        }
++0            ff.close();
++0            }
++0                ff<<(i+"\n");
++0            for(auto i :cont){
++0            ff.open(f_path,std::ios::out|std::ios::trunc);
++0            std:: fstream ff ;
++0
++0        void write_vector(std::vector<std::string> cont,fs::path f_path){
++0        }
++0            
++0            
++0            return content;
++0            }
++0                }
++0                    content.erase(content.begin()+i[1]-'0');
++0                else{
++0                }
++0                    content.insert(content.begin()+i[1]-'0',i.substr(2));
++0                if(i[0]=='+'){
++0                
++0            for(auto i : delta){
++0            std::cout<<"cccccc "<<diff_base/fs::path(f_path.string()+".txt")<<std::endl;
++0            auto delta=get_content(diff_base/fs::path(f_path.string()+".txt"));
++0            fs::path diff_base=fs::current_path()/fs::path(".diff")/fs::path(commit_name);
++0            auto content=get_content(stage_base/f_path);
++0            fs::path stage_base=fs::current_path()/fs::path(".stage")/fs::path(commit_name);
++0        std::vector<std::string> get_vector_from_delta(fs::path f_path){
++0        //f_path path to relative
 +0        }
 +0
 +0            this->next =nullptr;

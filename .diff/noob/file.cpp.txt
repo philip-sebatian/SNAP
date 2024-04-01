@@ -12,7 +12,7 @@
 +0    for (const auto& entry : fs::directory_iterator(root)) {
 +0    
 +0void traverse(const fs::path& root,std::set<fs::path>& filestruct) {
-+0// Function to traverse a folder and construct its structure
++0// Function to traverse a folder and construct its structure in set ..relative to root
 +0
 +0namespace fs = std::filesystem;
 +0#include <bits/stdc++.h>
