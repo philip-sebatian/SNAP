@@ -1,1 +1,1 @@
-$,bbbb.txt,diff.cpp,esdgfhjkl;,file.cpp,file.txt,new.txt,sha.cpp,tree,tree.cpp
+$,a.out,bbbb.txt,delll.txt,diff.cpp,esdgfhjkl;,file.cpp,file.txt,new.txt,sha.cpp,tree.cpp
