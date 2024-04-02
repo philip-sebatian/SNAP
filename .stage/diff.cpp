@@ -98,7 +98,7 @@ std::vector<std::string> get_content(std::string fname){
     std::vector <std::string>lines;
     while(getline(ff,str)){
     
-        std::cout<<str<<std::endl;
+        
         lines.push_back(str);
    }
    return lines;
@@ -226,12 +226,12 @@ void create_change(std::set<fs::path> file_s,fs::path base){
 
     }*/
     for(const auto &i :file_s){
-        std::cout<<"contents "<<i<<"\n";
+        
         if(c_flst.find(i)==c_flst.end()){
             if(fs::is_directory(i)){
-                std::cout<<"laaaaaaaaaa"<<std::endl;
+
                 if(!fs::exists(base/i)){
-                    std::cout<<"add "<<base/i<<"\n";
+
                     fs::create_directories(base / i);
                 }
             }
@@ -239,9 +239,8 @@ void create_change(std::set<fs::path> file_s,fs::path base){
     }
 
     for(const auto &i : c_flst){
-        std::cout<<"conetnt B "<<i<<"\n";
+
         if(file_s.find(i)==file_s.end()){
-                std::cout<<"remove "<<base/i<<"\n";
                 fs::remove_all(base/i);
             
         }

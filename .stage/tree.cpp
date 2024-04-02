@@ -35,11 +35,13 @@ class Treeobject{
         std::vector<std::string> get_vector_from_delta(fs::path f_path){
             fs::path stage_base=fs::current_path()/fs::path(".stage")/fs::path(commit_name);
             auto content=get_content(stage_base/f_path);
+            std::cout<<stage_base/f_path<<std::endl;
             fs::path diff_base=fs::current_path()/fs::path(".diff")/fs::path(commit_name);
             auto delta=get_content(diff_base/fs::path(f_path.string()+".txt"));
             std::cout<<"cccccc "<<diff_base/fs::path(f_path.string()+".txt")<<std::endl;
+            std::cout<<content.size()<<std::endl;
             for(auto i : delta){
-                
+                std::cout<<i[1]<<std::endl;
                 if(i[0]=='+'){
                     content.insert(content.begin()+i[1]-'0',i.substr(2));
                 }
@@ -54,6 +56,7 @@ class Treeobject{
         void write_vector(std::vector<std::string> cont,fs::path f_path){
 
             std:: fstream ff ;
+            if(cont.size()==0)return ;
             ff.open(f_path,std::ios::out|std::ios::trunc);
             for(auto i :cont){
                 ff<<(i+"\n");
@@ -62,7 +65,7 @@ class Treeobject{
         }
         void insert_blob(fs::path f_path,std::string commit_name){
             std::string stage_path=f_path.parent_path()/fs::path(".stage");//this acts as base to the stage file change it 
-            std::string stage_file= stage_path / f_path.filename();
+            std::string stage_file= stage_path / fs::relative( f_path.filename(),fs::path(commit_name));
             std::string hash = computeSHA256(f_path);
             this->commit_name=commit_name;
             fs::path diff_base=fs::current_path()/fs::path(".diff")/fs::path(commit_name);
@@ -130,8 +133,9 @@ class Tree{
 int main(){
     Treeobject tee = Treeobject();
     traverse_make_tree_obj(fs::current_path(),tee);
-    for(auto i : tee.fb){
-        std::cout<<i.filepath<<std::endl;
-    }
+   // auto  i =get_content("/home/ubuntu/cppgit/v-control/.diff/noob/diff.cpp.txt");
     tee.make_fs();
+    
+      //  std::cout<<i.size()<<std::endl;
+    //sadjh
 }
