@@ -42,12 +42,19 @@ class Treeobject{
             std::cout<<"cccccc "<<diff_base/fs::path(f_path.string()+".txt")<<std::endl;
             std::cout<<content.size()<<std::endl;
             for(auto i : delta){
-                
+                int j =1;
+                std::string temp="";
+                while(i[j]!='$'){
+                    temp+=i[j];
+                    j++;
+                }
+                j++;
                 if(i[0]=='+'){
-                    content.insert(content.begin()+i[1]-'0',i.substr(2));
+
+                    content.insert(content.begin()+std::stoi(temp),i.substr(j));
                 }
                 else{
-                    content.erase(content.begin()+i[1]-'0');
+                    content.erase(content.begin()+std::stoi(temp));
                 }
             }
             std::cout<<"////////////////////////////"<<content.size()<<"poooop"<<std::endl;
@@ -66,7 +73,7 @@ class Treeobject{
             ff.close();
         }
         void insert_blob(fs::path f_path,std::string commit_name){
-            std::string stage_path=f_path.parent_path()/fs::path(".stage");//this acts as base to the stage file change it 
+            std::string stage_path=fs::current_path()/fs::path(".stage");//this acts as base to the stage file change it 
             std::cout<<"biasbiabsdasdnskad=------"<<stage_path /fs::relative(f_path, fs::current_path())<<std::endl;
             std::string stage_file= stage_path /fs::relative(f_path,fs::current_path());
             
@@ -140,9 +147,11 @@ int main(){
     Treeobject tee = Treeobject();
    traverse_make_tree_obj(fs::current_path(),tee);
    // auto  i =get_content("/home/ubuntu/cppgit/v-control/.diff/noob/diff.cpp.txt");
-    tee.make_fs();
+   tee.make_fs();
+   for(auto i :tee.fb){
+    std::cout<<i.filepath<<std::endl;
+   }
     
-      //  std::cout<<i.size()<<std::endl;
     //sadjh
     //esrtdfyguhlkj;,
    
