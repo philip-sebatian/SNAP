@@ -25,19 +25,19 @@ class Treeobject{
         std::string commit_name;
         std:: shared_ptr<Treeobject> next;
 
-        Treeobject(){
+        Treeobject(std::string commit_name ){
             
-            
+            this->commit_name=commit_name;
             this->next =nullptr;
 
         }
         //f_path path to relative
         std::vector<std::string> get_vector_from_delta(fs::path f_path){
-            fs::path stage_base=fs::current_path()/fs::path(".stage");
+            fs::path stage_base=fs::current_path()/fs::path(".pgit")/fs::path("stage");
             auto content=get_content(stage_base/f_path);
             std::cout<<"////////////////////////////"<<content.size()<<std::endl;
             std::cout<<stage_base/f_path<<std::endl;
-            fs::path diff_base=fs::current_path()/fs::path(".diff")/fs::path(commit_name);
+            fs::path diff_base=fs::current_path()/fs::path(".pgit")/fs::path("diff")/fs::path(this->commit_name);
             auto delta=get_content(diff_base/fs::path(f_path.string()+".txt"));
             std::cout<<"cccccc "<<diff_base/fs::path(f_path.string()+".txt")<<std::endl;
             std::cout<<content.size()<<std::endl;
@@ -72,36 +72,53 @@ class Treeobject{
             }
             ff.close();
         }
-        void insert_blob(fs::path f_path,std::string commit_name){
-            std::string stage_path=fs::current_path()/fs::path(".stage");//this acts as base to the stage file change it 
+        void insert_blob(fs::path f_path){
+            std::string stage_path=fs::current_path()/fs::path(".pgit")/fs::path("stage");//this acts as base to the stage file change it 
             std::cout<<"biasbiabsdasdnskad=------"<<stage_path /fs::relative(f_path, fs::current_path())<<std::endl;
             std::string stage_file= stage_path /fs::relative(f_path,fs::current_path());
             
-            this->commit_name=commit_name;
+            
             std::cout<<"ssssssssssssssssssss =="<<stage_file<<std::endl;
-            fs::path diff_base=fs::current_path()/fs::path(".diff")/fs::path(commit_name);
+            fs::path diff_base=fs::current_path()/fs::path(".pgit")/fs::path("diff")/fs::path(this->commit_name);
             if(!fs::exists(diff_base)){
                 fs::create_directories(diff_base);
             }
-            fs::path file_struct_path=fs::current_path()/fs::path(".file");
-            write_fs_delta(file_struct_path/fs::path(commit_name+".txt"));
+            fs::path file_struct_path=fs::current_path()/fs::path(".pgit")/fs::path("file");
+            write_fs_delta(file_struct_path/fs::path(this->commit_name+".txt"));
             
             write_delta_from_file_name(stage_file,f_path,diff_base/fs::path(""+f_path.filename().string()+""".txt"));
             
             fb.insert(file_blob(fs::relative(f_path,fs::current_path()),diff_base/fs::path(f_path.filename().string()+".txt")));
         }
         void make_fs(){
-            auto fs_set =get_fs(fs::current_path()/ fs::path(".file")/fs::path(commit_name+".txt"));
-            create_change(fs_set,fs::current_path()/fs::path(".stage"));
+            auto fs_set =get_fs(fs::current_path()/fs::path(".pgit")/ fs::path("file")/fs::path(this->commit_name+".txt"));
+            create_change(fs_set,fs::current_path()/fs::path(".pgit")/fs::path("stage"));
             for(auto i : fb){
                 std::cout<<i.filepath<<std::endl;
                 auto vec =get_vector_from_delta(i.filepath.filename());
                 std::cout<<"size="<<vec.size()<<std::endl;
-                write_vector(vec,fs::current_path()/fs::path(".stage")/i.filepath);
+                write_vector(vec,fs::current_path()/fs::path(".pgit")/fs::path("stage")/i.filepath);
                 
                 
             }
         }
+
+    void traverse_make_tree_obj(const fs::path& root) {
+    
+    for (const auto& entry : fs::directory_iterator(root)) {
+        std::cout<<entry.path()<<std::endl;
+        if(fs::is_regular_file(entry))
+
+        insert_blob(entry.path());
+        if(fs::is_directory(entry)){
+            if(entry.path().filename().string()[0]!='.'){
+                traverse_make_tree_obj(entry.path());
+            }
+        }
+    }
+    
+    
+}
 
 
 };
@@ -112,7 +129,7 @@ void traverse_make_tree_obj(const fs::path& root,Treeobject &tee) {
         std::cout<<entry.path()<<std::endl;
         if(fs::is_regular_file(entry))
 
-        tee.insert_blob(entry.path(),"noob");
+        tee.insert_blob(entry.path());
         if(fs::is_directory(entry)){
             if(entry.path().filename().string()[0]!='.'){
                 traverse_make_tree_obj(entry.path(),tee);
@@ -130,7 +147,7 @@ class Tree{
 
     void snapshot(std::string snap_name){
         if(head==nullptr){
-             head = std::make_shared<Treeobject>();
+             head = std::make_shared<Treeobject>(snap_name);
              branches[current_branch]=head;
 
 
@@ -144,10 +161,13 @@ class Tree{
 
 
 int main(){
-    Treeobject tee = Treeobject();
-   traverse_make_tree_obj(fs::current_path(),tee);
+    Treeobject tee = Treeobject("hello");
+    Treeobject tee2 = Treeobject("hi");
+   tee.traverse_make_tree_obj(fs::current_path());
    // auto  i =get_content("/home/ubuntu/cppgit/v-control/.diff/noob/diff.cpp.txt");
    tee.make_fs();
+   tee2.traverse_make_tree_obj(fs::current_path());
+   tee2.make_fs();
    for(auto i :tee.fb){
     std::cout<<i.filepath<<std::endl;
    }
