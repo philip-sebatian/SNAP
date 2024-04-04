@@ -1,3 +1,57 @@
--168$   //tee2.make_fs();
-+168$   tee2.make_fs();
-+168$   tee2.traverse_make_tree_obj(fs::current_path());
+-191$    
++191$    return 0;
++191$    Treeobject new_tree = Treeobject::from_json(tree_json);
++191$    // Deserialize JSON string to Treeobject
++191$    std::cout << tree_json.dump(4) << std::endl;
++191$    // Output JSON string
++191$    json tree_json = tee.to_json();
++46$    }
++46$        return tree;
++45$            tree.fb.insert(file_blob::from_json(blob_json));
++45$        for (const auto& blob_json : j.at("fb")) {
++45$        // Deserialize set of file_blob objects from JSON array
++45$        Treeobject tree(commit_name);
++45$        std::string commit_name = j.at("commit_name").get<std::string>();
++45$        // Extract data from JSON and construct Treeobject instance
++45$    static Treeobject from_json(const json& j) {
++45$    // Deserialization from JSON
++44$    }
++44$        return j;
++44$        }
++44$            j["fb"].push_back(blob.to_json());
++44$        for (const auto& blob : fb) {
++44$        // Serialize set of file_blob objects into JSON array
++44$        j["commit_name"] = commit_name;
++44$        // Serialize Treeobject members into JSON
++44$        json j;
++44$        json to_json() const {
++44$        }
++44$
++29$
++28$        return file_blob(filepath_str, f_name);
++28$        std::string f_name = j.at("f_name").get<std::string>();
++28$        std::string filepath_str = j.at("filepath").get<std::string>();
++28$        // Extract data from JSON and construct file_blob instance
++28$     static file_blob from_json(const json& j) {
++28$    }
++28$        return j;
++28$        j["f_name"] = f_name;
++28$        j["filepath"] = filepath.string();
++28$        // Serialize file_blob members into JSON
++28$        json j;
++28$        json to_json() const {
++28$    }
+-15$
++15$using json = nlohmann::json;
+-13$#include <boost/serialization/export.hpp> 
+-12$#include <boost/serialization/utility.hpp>
+-11$#include <boost/serialization/unordered_map.hpp>
+-10$#include <boost/serialization/vector.hpp>
+-9$#include <boost/serialization/string.hpp>
+-8$#include <boost/serialization/shared_ptr.hpp>
+-7$#include <boost/serialization/set.hpp>
+-6$#include <boost/archive/text_iarchive.hpp>
+-5$#include <boost/archive/text_oarchive.hpp>
+-4$#include <fstream>
+-3$#include <iostream>
++3$#include "json.hpp"

@@ -1,8 +1,9 @@
 #include<bits/stdc++.h>
 #include <fstream>
 #include "diff.cpp"
+#include "json.hpp"
 
-
+using json = nlohmann::json;
 
 class file_blob{
     public:
@@ -16,6 +17,20 @@ class file_blob{
         bool operator<(const file_blob& other) const {
         return filepath < other.filepath;
     }
+        json to_json() const {
+        json j;
+        // Serialize file_blob members into JSON
+        j["filepath"] = filepath.string();
+        j["f_name"] = f_name;
+        return j;
+    }
+     static file_blob from_json(const json& j) {
+        // Extract data from JSON and construct file_blob instance
+        std::string filepath_str = j.at("filepath").get<std::string>();
+        std::string f_name = j.at("f_name").get<std::string>();
+        return file_blob(filepath_str, f_name);
+    }
+
 };
 
 class Treeobject{
@@ -33,6 +48,28 @@ class Treeobject{
             this->prev=nullptr;
 
         }
+        json to_json() const {
+        json j;
+        // Serialize Treeobject members into JSON
+        j["commit_name"] = commit_name;
+        // Serialize set of file_blob objects into JSON array
+        for (const auto& blob : fb) {
+            j["fb"].push_back(blob.to_json());
+        }
+        return j;
+    }
+
+    // Deserialization from JSON
+    static Treeobject from_json(const json& j) {
+        // Extract data from JSON and construct Treeobject instance
+        std::string commit_name = j.at("commit_name").get<std::string>();
+        Treeobject tree(commit_name);
+        // Deserialize set of file_blob objects from JSON array
+        for (const auto& blob_json : j.at("fb")) {
+            tree.fb.insert(file_blob::from_json(blob_json));
+        }
+        return tree;
+    }
         //f_path path to relative
         std::vector<std::string> get_vector_from_delta(fs::path f_path){
             fs::path stage_base=fs::current_path()/fs::path(".pgit")/fs::path("stage");
@@ -178,7 +215,12 @@ int main(){
    for(auto i :tee.fb){
     std::cout<<i.filepath<<std::endl;
    }
-    
+    json tree_json = tee.to_json();
+    // Output JSON string
+    std::cout << tree_json.dump(4) << std::endl;
+    // Deserialize JSON string to Treeobject
+    Treeobject new_tree = Treeobject::from_json(tree_json);
+    return 0;
     //sadjh
     //esrtdfyguhlkj;,
    
