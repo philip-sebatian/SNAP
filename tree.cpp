@@ -38,38 +38,64 @@ class Treeobject{
        
         std::set<file_blob> fb;
         std::string commit_name;
-        std:: shared_ptr<Treeobject> next;
-        std:: shared_ptr<Treeobject> prev;
+        std:: shared_ptr<Treeobject> next=nullptr;
+        std:: shared_ptr<Treeobject> prev=nullptr;
 
         Treeobject(std::string commit_name ){
             
             this->commit_name=commit_name;
             this->next =nullptr;
             this->prev=nullptr;
+            
 
         }
-        json to_json() const {
-        json j;
-        // Serialize Treeobject members into JSON
-        j["commit_name"] = commit_name;
-        // Serialize set of file_blob objects into JSON array
-        for (const auto& blob : fb) {
-            j["fb"].push_back(blob.to_json());
-        }
-        return j;
+        Treeobject()=default;
+       json to_json() const {
+    json j;
+    // Serialize Treeobject members into JSON
+    j["commit_name"] = commit_name;
+    // Serialize set of file_blob objects into JSON array
+    for (const auto& blob : fb) {
+        j["fb"].push_back(blob.to_json());
     }
+    // Serialize next if it exists
+    if (next != nullptr) {
+        j["next"] = (next)->to_json();
+    }
+    // Serialize prev if it exists
+    if (prev != nullptr) {
+        j["prev"] = prev->to_json();
+    }
+    return j;
+}
+
+
+
 
     // Deserialization from JSON
-    static Treeobject from_json(const json& j) {
-        // Extract data from JSON and construct Treeobject instance
-        std::string commit_name = j.at("commit_name").get<std::string>();
-        Treeobject tree(commit_name);
-        // Deserialize set of file_blob objects from JSON array
-        for (const auto& blob_json : j.at("fb")) {
-            tree.fb.insert(file_blob::from_json(blob_json));
-        }
-        return tree;
+        static Treeobject from_json(const json& j) {
+    // Extract data from JSON and construct Treeobject instance
+            std::string commit_name = j.at("commit_name").get<std::string>();
+            Treeobject tree(commit_name);
+
+            // Deserialize set of file_blob objects from JSON array
+            for (const auto& blob_json : j.at("fb")) {
+                tree.fb.insert(file_blob::from_json(blob_json));
+            }
+
+            // Deserialize next if it exists
+            if (j.find("next") != j.end()) {
+                tree.next = std::make_shared<Treeobject>(Treeobject::from_json(j.at("next")));
+            }
+
+            // Deserialize prev if it exists
+            if (j.find("prev") != j.end()) {
+                tree.prev = std::make_shared<Treeobject>(Treeobject::from_json(j.at("prev")));
+            }
+
+            return tree;
     }
+
         //f_path path to relative
         std::vector<std::string> get_vector_from_delta(fs::path f_path){
             fs::path stage_base=fs::current_path()/fs::path(".pgit")/fs::path("stage");
@@ -158,70 +184,85 @@ class Treeobject{
     
     
 }
-
-
-};
-
-void traverse_make_tree_obj(const fs::path& root,Treeobject &tee) {
-    
-    for (const auto& entry : fs::directory_iterator(root)) {
-        std::cout<<entry.path()<<std::endl;
-        if(fs::is_regular_file(entry))
-
-        tee.insert_blob(entry.path());
-        if(fs::is_directory(entry)){
-            if(entry.path().filename().string()[0]!='.'){
-                traverse_make_tree_obj(entry.path(),tee);
-            }
+        void snapshot(std::string name ){
+        auto curr = std::make_shared<Treeobject>(*this);
+        while(curr->next!=nullptr){
+            curr->make_fs();
+            curr=curr->next;
         }
-    }
-    
-    
-}
+        curr->next=std::make_shared<Treeobject>(Treeobject(name));
+        curr->next->traverse_make_tree_obj(fs::current_path());
+        auto tree_json = this->to_json();
+        std::ofstream file((fs::current_path()/fs::path(".pgit")/fs::path("tree.json")).string());
+        file << tree_json.dump(4); // Write formatted JSON to file
+        file.close();
 
-class Tree{
-    std::shared_ptr<Treeobject> head;
-    std::unordered_map <std::string,std::shared_ptr<Treeobject>> branches;
-    std::string current_branch="master";
 
-    void snapshot(std::string snap_name){
-        if(head==nullptr){
-             head = std::make_shared<Treeobject>(snap_name);
-             branches[current_branch]=head;
-        }
-        else{
-            std::shared_ptr<Treeobject> new_node = std::make_shared<Treeobject>(snap_name);
-            auto old = branches[current_branch];
-            old->next=new_node;
-            new_node->prev=old;
-            
-        }
-        
     }
 
 
 };
+
+
+    
+    
+
+
 
 
 
 int main(){
-    Treeobject tee = Treeobject("hello");
-    Treeobject tee2 = Treeobject("hi");
-   tee.traverse_make_tree_obj(fs::current_path());
+    /*Treeobject tee = Treeobject("hello");
+    
+    
+    
+   
    // auto  i =get_content("/home/ubuntu/cppgit/v-control/.diff/noob/diff.cpp.txt");
-   tee.make_fs();
-   tee2.traverse_make_tree_obj(fs::current_path());
-   tee2.make_fs();
-   for(auto i :tee.fb){
-    std::cout<<i.filepath<<std::endl;
-   }
+   
+   
+   
     json tree_json = tee.to_json();
     // Output JSON string
-    std::cout << tree_json.dump(4) << std::endl;
-    // Deserialize JSON string to Treeobject
-    Treeobject new_tree = Treeobject::from_json(tree_json);
-    return 0;
+    std::ofstream file("tree.json");
+    if (file.is_open()) {
+        file << tree_json.dump(4); // Write formatted JSON to file
+        file.close();
+        std::cout << "JSON data written to file successfully." << std::endl;
+    } else {
+        std::cerr << "Unable to open file for writing." << std::endl;
+        return 1; // Return error code
+    }*/
     //sadjh
     //esrtdfyguhlkj;,
+    json tree_json;
+    std::ifstream file((fs::current_path()/fs::path(".pgit")/fs::path("tree.json")).string());
+    file.seekg(0, std::ios::end);
+    std::streampos size = file.tellg();
+    file.seekg(0, std::ios::beg);
+    Treeobject tree;
+    std::string name;
+    std::cin>>name;
+    std::cout<<(fs::current_path()/fs::path(".pgit")/fs::path("tree.json")).string()<<std::endl;
+    if(!size==0){
+    file >> tree_json;
+
+    // Close the file
+    file.close();
+    tree = Treeobject::from_json(tree_json);
+    tree.snapshot(name);
+    }
+    else{
+        tree=Treeobject(name);
+        tree.traverse_make_tree_obj(fs::current_path());
+        auto t_json = tree.to_json();
+        std::ofstream file((fs::current_path()/fs::path(".pgit")/fs::path("tree.json")).string());
+        file << t_json.dump(4); // Write formatted JSON to file
+        file.close();
+        
+    }
+    std::shared_ptr<Treeobject> head = std::make_shared<Treeobject>(tree);
+    
+    //xcgvhbjknlm,
+
    
 }

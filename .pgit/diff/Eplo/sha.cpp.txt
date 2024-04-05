@@ -1,0 +1,37 @@
++0$
++0$
++0$
++0$}
++0$    return ss.str();
++0$
++0$    }
++0$        ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<unsigned int>(digest[i]);
++0$    for (int i = 0; i < SHA256_DIGEST_LENGTH; ++i) {
++0$    std::stringstream ss;
++0$    // Convert the digest to a hexadecimal string
++0$
++0$    SHA256_Final(digest, &sha256Context);
++0$    unsigned char digest[SHA256_DIGEST_LENGTH];
++0$    // Finalize the hash and get the digest
++0$
++0$    }
++0$        SHA256_Update(&sha256Context, buffer, file.gcount());
++0$    while (file.read(buffer, sizeof(buffer))) {
++0$    char buffer[BUFSIZ];
++0$
++0$    SHA256_Init(&sha256Context);
++0$    SHA256_CTX sha256Context;
++0$    // Initialize SHA-256 context
++0$
++0$    }
++0$        return "";
++0$        std::cerr << "Error opening file: " << filename << std::endl;
++0$    if (!file) {
++0$    std::ifstream file(filename, std::ios::binary);
++0$std::string computeSHA256(const std::string& filename) {
++0$
++0$#include <openssl/sha.h>
++0$#include <sstream>
++0$#include <iomanip>
++0$#include <fstream>
++0$#include <iostream>
