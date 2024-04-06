@@ -119,12 +119,8 @@ public:
     {
         fs::path stage_base = fs::current_path() / fs::path(".pgit") / fs::path("stage");
         auto content = get_content(stage_base / ff.filepath);
-        std::cout << "////////////////////////////" << content.size() << std::endl;
-        std::cout << stage_base / ff.filepath.filename() << std::endl;
         fs::path diff_base = fs::current_path() / fs::path(".pgit") / fs::path("diff") / fs::path(this->commit_name);
         auto delta = get_content(ff.f_name);
-        std::cout << "cccccc " << diff_base / fs::path(ff.filepath.filename().string() + ".txt") << std::endl;
-        std::cout << content.size() << std::endl;
         for (auto i : delta)
         {
             int j = 1;
@@ -145,7 +141,7 @@ public:
                 content.erase(content.begin() + std::stoi(temp));
             }
         }
-        std::cout << "////////////////////////////" << content.size() << "poooop" << std::endl;
+
         return content;
     }
     void write_vector(std::vector<std::string> cont, fs::path f_path)
@@ -163,10 +159,10 @@ public:
     void insert_blob(fs::path f_path)
     {
         std::string stage_path = fs::current_path() / fs::path(".pgit") / fs::path("stage"); // this acts as base to the stage file change it
-        std::cout << "biasbiabsdasdnskad=------" << stage_path / fs::relative(f_path, fs::current_path()) << std::endl;
+        
         std::string stage_file = stage_path / fs::relative(f_path, fs::current_path());
 
-        std::cout << "ssssssssssssssssssss ==" << stage_file << std::endl;
+      
         fs::path diff_base = fs::current_path() / fs::path(".pgit") / fs::path("diff") / fs::path(this->commit_name);
         if (!fs::exists(diff_base))
         {
@@ -186,10 +182,22 @@ public:
         create_change(fs_set, fs::current_path() / fs::path(".pgit") / fs::path("stage"));
         for (auto i : fb)
         {
-            std::cout << i.filepath << std::endl;
             auto vec = get_vector_from_delta(i);
-            std::cout << "size=" << vec.size() << std::endl;
             write_vector(vec, fs::current_path() / fs::path(".pgit") / fs::path("stage") / i.filepath);
+        }
+    }
+    void make_fs_cc(fs::path base)
+    {
+        auto fs_set = get_fs(fs::current_path() / fs::path(".pgit") / fs::path("file") / fs::path(this->commit_name + ".txt"));
+        create_change(fs_set, base);
+        create_change(fs_set, fs::current_path() / fs::path(".pgit") / fs::path("stage"));
+        for (auto i : fb)
+        {
+
+            auto vec = get_vector_from_delta(i);
+
+            write_vector(vec, fs::current_path() / fs::path(".pgit") / fs::path("stage") / i.filepath);
+            write_vector(vec, base / i.filepath);
         }
     }
 
@@ -218,10 +226,17 @@ public:
         while (curr->next != nullptr)
         {
             curr->make_fs();
+            if(curr->commit_name==name){
+                std::cout<<"snapshot not taken . snap with same name exits"<<std::endl;
+                return;
+            }
             curr = curr->next;
         }
         curr->make_fs();
-        
+            if(curr->commit_name==name){
+                std::cout<<"snapshot not taken . snap with same name exits"<<std::endl;
+                return ;
+            }
             curr->next = std::make_shared<Treeobject>(Treeobject(name));
             curr->next->traverse_make_tree_obj(fs::current_path());
         
@@ -234,6 +249,35 @@ public:
         {
             fs::remove_all(entry);
         }
+    }
+
+    void roll_back(std::string name){
+        auto curr= std::make_shared<Treeobject>(*this);
+        auto head =curr;
+        for(const auto &entry : fs::directory_iterator(fs::current_path())){
+            if(entry.path().filename().string()[0]!='.'){
+                fs::remove_all(entry);
+            }
+        }
+        while(curr->commit_name!=name && curr!=nullptr){
+            curr->make_fs_cc(fs::current_path());
+            curr=curr->next;
+
+        }
+        if(curr!=nullptr){
+            curr->make_fs_cc(fs::current_path());
+            curr->next=nullptr;
+        }
+        auto tree_json = head->to_json();
+        auto path = (fs::current_path() / fs::path(".pgit") / fs::path("tree.json")).string();
+        std::ofstream file(path);
+        file << tree_json.dump(4); // Write formatted JSON to file
+        file.close();
+        for (const auto &entry : fs::directory_iterator(fs::current_path() / fs::path(".pgit") / fs::path("stage")))
+        {
+            fs::remove_all(entry);
+        }
+
     }
 };
 
@@ -254,38 +298,3 @@ Treeobject loadTreeobject(std::string commit)
     
 }
 
-/*int main()
-{
-    Treeobject tee = Treeobject("hello");
-
-
-
-
-   // auto  i =get_content("/home/ubuntu/cppgit/v-control/.diff/noob/diff.cpp.txt");
-
-
-
-    json tree_json = tee.to_json();
-    // Output JSON string
-    std::ofstream file("tree.json");
-    if (file.is_open()) {
-        file << tree_json.dump(4); // Write formatted JSON to file
-        file.close();
-        std::cout << "JSON data written to file successfully." << std::endl;
-    } else {
-        std::cerr << "Unable to open file for writing." << std::endl;
-        return 1; // Return error code
-    }
-    // sadjh
-    // esrtdfyguhlkj;,
-    auto j = loadTreeobject();
-    auto head = std::make_shared<Treeobject>(j);
-    while (head != nullptr)
-    {
-        std::cout << head->commit_name << std::endl;
-        head = head->next;
-    }
-    j.snapshot("level");
-
-    // xcgvhbjknlm,
-}*/

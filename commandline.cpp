@@ -85,4 +85,25 @@ int main(int argc, char *argv[])
             std::cout << "invalid number of arguments for command" << std::endl;
         }
     }
+    else if(std::strcmp(argv[1], "rollback") == 0){
+        if (argc == 3)
+        {
+            std::fstream file((fs::current_path() / fs::path(".pgit") / fs::path("tree.json")).string());
+            file.seekg(0, std::ios::end);
+            std::streampos size = file.tellg();
+            file.seekg(0, std::ios::beg);
+            if(size==0){
+                std::cout<<"no commits made to roll back"<<std::endl;
+            }
+            else{
+                auto j = loadTreeobject(argv[2]);
+
+                j.roll_back(argv[2]);
+            }
+        }
+        else
+        {
+            std::cout << "invalid number of arguments for command" << std::endl;
+        }
+    }
 }

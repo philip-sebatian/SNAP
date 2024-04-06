@@ -226,10 +226,7 @@ void write_delta_from_file_name(std::string f1, std::string f2, std::string delt
     lines1 = get_content(f1);
     lines2 = get_content(f2);
     std::vector<std::vector<int>> dp = calc(lines1, lines2);
-    if (dp[lines1.size()][lines2.size()] == 0)
-    {
-        std::cout << "outttttt" << std::endl;
-    }
+   
     std::deque<actions> ssk = get_actions(dp, lines1, lines2);
     write_delta_from_actionstk(delta, ssk);
 }
@@ -239,10 +236,7 @@ void create_change(std::set<fs::path> file_s, fs::path base)
 {
     std::set<fs::path> c_flst;
     traverse(base, c_flst);
-    /*for(auto i :file_s){
-        std::cout<<i<<"laaaa"<<std::endl;
-
-    }*/
+    
     for (const auto &i : file_s)
     {
 
@@ -269,15 +263,3 @@ void create_change(std::set<fs::path> file_s, fs::path base)
         }
     }
 }
-
-/*int main()
-{
-   //write_delta_from_file_name("he;lo.txt","new.txt","delta3.txt");
-   //write_fs_delta("file.txt");
-   //auto i = get_fs("file.txt");
-    //create_change(i);
-    auto i = reconstruct_delta_file("delta3.txt");
-    for(auto j :i){
-        std::cout<<j.letter<<"\n";
-    }
-}*/

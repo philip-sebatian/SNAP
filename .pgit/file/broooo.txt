@@ -1,1 +1,0 @@
-$,a.out,a.out.txt,commandline.cpp,diff.cpp,file.cpp,json.hpp,sha.cpp
