@@ -36,6 +36,17 @@ public:
     }
 };
 
+std::string get_delta_fname(std::string path){
+    std::string str="";
+    for(auto i : path){
+        if(i=='/'){
+            continue;
+        }
+        str+=i;
+    }
+    return str;
+}
+
 class Treeobject
 {
 public:
@@ -104,15 +115,15 @@ public:
     }
 
     // f_path path to relative
-    std::vector<std::string> get_vector_from_delta(fs::path f_path)
+    std::vector<std::string> get_vector_from_delta(file_blob ff)
     {
         fs::path stage_base = fs::current_path() / fs::path(".pgit") / fs::path("stage");
-        auto content = get_content(stage_base / f_path);
+        auto content = get_content(stage_base / ff.filepath);
         std::cout << "////////////////////////////" << content.size() << std::endl;
-        std::cout << stage_base / f_path << std::endl;
+        std::cout << stage_base / ff.filepath.filename() << std::endl;
         fs::path diff_base = fs::current_path() / fs::path(".pgit") / fs::path("diff") / fs::path(this->commit_name);
-        auto delta = get_content(diff_base / fs::path(f_path.string() + ".txt"));
-        std::cout << "cccccc " << diff_base / fs::path(f_path.string() + ".txt") << std::endl;
+        auto delta = get_content(ff.f_name);
+        std::cout << "cccccc " << diff_base / fs::path(ff.filepath.filename().string() + ".txt") << std::endl;
         std::cout << content.size() << std::endl;
         for (auto i : delta)
         {
@@ -164,10 +175,10 @@ public:
         fs::path file_struct_path = fs::current_path() / fs::path(".pgit") / fs::path("file");
         write_fs_delta(file_struct_path / fs::path(this->commit_name + ".txt"));
 
-        write_delta_from_file_name(stage_file, f_path, diff_base / fs::path("" + f_path.filename().string() + ""
+        write_delta_from_file_name(stage_file, f_path, diff_base / fs::path("" + get_delta_fname(f_path.string()) + ""
                                                                                                               ".txt"));
 
-        fb.insert(file_blob(fs::relative(f_path, fs::current_path()), diff_base / fs::path(f_path.filename().string() + ".txt")));
+        fb.insert(file_blob(fs::relative(f_path, fs::current_path()), diff_base / fs::path(get_delta_fname(f_path.string())  + ".txt")));
     }
     void make_fs()
     {
@@ -176,7 +187,7 @@ public:
         for (auto i : fb)
         {
             std::cout << i.filepath << std::endl;
-            auto vec = get_vector_from_delta(i.filepath.filename());
+            auto vec = get_vector_from_delta(i);
             std::cout << "size=" << vec.size() << std::endl;
             write_vector(vec, fs::current_path() / fs::path(".pgit") / fs::path("stage") / i.filepath);
         }
@@ -210,8 +221,10 @@ public:
             curr = curr->next;
         }
         curr->make_fs();
-        curr->next = std::make_shared<Treeobject>(Treeobject(name));
-        curr->next->traverse_make_tree_obj(fs::current_path());
+        
+            curr->next = std::make_shared<Treeobject>(Treeobject(name));
+            curr->next->traverse_make_tree_obj(fs::current_path());
+        
         auto tree_json = head->to_json();
         auto path = (fs::current_path() / fs::path(".pgit") / fs::path("tree.json")).string();
         std::ofstream file(path);
@@ -224,31 +237,21 @@ public:
     }
 };
 
-Treeobject loadTreeobject()
+Treeobject loadTreeobject(std::string commit)
 {
     json tree_json;
     std::ifstream file((fs::current_path() / fs::path(".pgit") / fs::path("tree.json")).string());
-    file.seekg(0, std::ios::end);
-    std::streampos size = file.tellg();
+
     file.seekg(0, std::ios::beg);
     Treeobject tree;
 
-    std::cout << (fs::current_path() / fs::path(".pgit") / fs::path("tree.json")).string() << std::endl;
-    if (!size == 0)
-    {
         file >> tree_json;
 
         // Close the file
         file.close();
         tree = Treeobject::from_json(tree_json);
         return tree;
-    }
-    else
-    {
-        tree = Treeobject();
-        tree.traverse_make_tree_obj(fs::current_path());
-        return tree;
-    }
+    
 }
 
 /*int main()

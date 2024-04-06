@@ -1,222 +1,74 @@
 {
-    "commit_name": "",
+    "commit_name": "irrrr",
     "fb": [
         {
-            "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/homeubuntucppgitv-controla.out.txt",
+            "f_name": "/home/ubuntu/v-control/.pgit/diff/irrrr/homeubuntuv-controla.out.txt",
             "filepath": "a.out"
         },
         {
-            "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/homeubuntucppgitv-controla.out.txt.txt",
+            "f_name": "/home/ubuntu/v-control/.pgit/diff/irrrr/homeubuntuv-controla.out.txt.txt",
             "filepath": "a.out.txt"
         },
         {
-            "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/homeubuntucppgitv-controlcommandline.cpp.txt",
+            "f_name": "/home/ubuntu/v-control/.pgit/diff/irrrr/homeubuntuv-controlcommandline.cpp.txt",
             "filepath": "commandline.cpp"
         },
         {
-            "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/homeubuntucppgitv-controldiff.cpp.txt",
+            "f_name": "/home/ubuntu/v-control/.pgit/diff/irrrr/homeubuntuv-controldiff.cpp.txt",
             "filepath": "diff.cpp"
         },
         {
-            "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/homeubuntucppgitv-controlfile.cpp.txt",
+            "f_name": "/home/ubuntu/v-control/.pgit/diff/irrrr/homeubuntuv-controlfile.cpp.txt",
             "filepath": "file.cpp"
         },
         {
-            "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/homeubuntucppgitv-controljson.hpp.txt",
+            "f_name": "/home/ubuntu/v-control/.pgit/diff/irrrr/homeubuntuv-controljson.hpp.txt",
             "filepath": "json.hpp"
         },
         {
-            "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/homeubuntucppgitv-controlsha.cpp.txt",
+            "f_name": "/home/ubuntu/v-control/.pgit/diff/irrrr/homeubuntuv-controlsha.cpp.txt",
             "filepath": "sha.cpp"
         },
         {
-            "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/homeubuntucppgitv-controltree.cpp.txt",
+            "f_name": "/home/ubuntu/v-control/.pgit/diff/irrrr/homeubuntuv-controltree.cpp.txt",
             "filepath": "tree.cpp"
         }
     ],
     "next": {
-        "commit_name": "kkk",
+        "commit_name": "popopp",
         "fb": [
             {
-                "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/kkk/homeubuntucppgitv-controla.out.txt",
+                "f_name": "/home/ubuntu/v-control/.pgit/diff/popopp/homeubuntuv-controla.out.txt",
                 "filepath": "a.out"
             },
             {
-                "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/kkk/homeubuntucppgitv-controla.out.txt.txt",
+                "f_name": "/home/ubuntu/v-control/.pgit/diff/popopp/homeubuntuv-controla.out.txt.txt",
                 "filepath": "a.out.txt"
             },
             {
-                "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/kkk/homeubuntucppgitv-controlcommandline.cpp.txt",
+                "f_name": "/home/ubuntu/v-control/.pgit/diff/popopp/homeubuntuv-controlcommandline.cpp.txt",
                 "filepath": "commandline.cpp"
             },
             {
-                "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/kkk/homeubuntucppgitv-controldiff.cpp.txt",
+                "f_name": "/home/ubuntu/v-control/.pgit/diff/popopp/homeubuntuv-controldiff.cpp.txt",
                 "filepath": "diff.cpp"
             },
             {
-                "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/kkk/homeubuntucppgitv-controlfile.cpp.txt",
+                "f_name": "/home/ubuntu/v-control/.pgit/diff/popopp/homeubuntuv-controlfile.cpp.txt",
                 "filepath": "file.cpp"
             },
             {
-                "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/kkk/homeubuntucppgitv-controljson.hpp.txt",
+                "f_name": "/home/ubuntu/v-control/.pgit/diff/popopp/homeubuntuv-controljson.hpp.txt",
                 "filepath": "json.hpp"
             },
             {
-                "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/kkk/homeubuntucppgitv-controlsha.cpp.txt",
+                "f_name": "/home/ubuntu/v-control/.pgit/diff/popopp/homeubuntuv-controlsha.cpp.txt",
                 "filepath": "sha.cpp"
             },
             {
-                "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/kkk/homeubuntucppgitv-controltree.cpp.txt",
+                "f_name": "/home/ubuntu/v-control/.pgit/diff/popopp/homeubuntuv-controltree.cpp.txt",
                 "filepath": "tree.cpp"
             }
-        ],
-        "next": {
-            "commit_name": "suku",
-            "fb": [
-                {
-                    "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/suku/homeubuntucppgitv-controla.out.txt",
-                    "filepath": "a.out"
-                },
-                {
-                    "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/suku/homeubuntucppgitv-controla.out.txt.txt",
-                    "filepath": "a.out.txt"
-                },
-                {
-                    "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/suku/homeubuntucppgitv-controlcommandline.cpp.txt",
-                    "filepath": "commandline.cpp"
-                },
-                {
-                    "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/suku/homeubuntucppgitv-controldiff.cpp.txt",
-                    "filepath": "diff.cpp"
-                },
-                {
-                    "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/suku/homeubuntucppgitv-controlfile.cpp.txt",
-                    "filepath": "file.cpp"
-                },
-                {
-                    "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/suku/homeubuntucppgitv-controljson.hpp.txt",
-                    "filepath": "json.hpp"
-                },
-                {
-                    "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/suku/homeubuntucppgitv-controlsha.cpp.txt",
-                    "filepath": "sha.cpp"
-                },
-                {
-                    "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/suku/homeubuntucppgitv-controltree.cpp.txt",
-                    "filepath": "tree.cpp"
-                }
-            ],
-            "next": {
-                "commit_name": "suk",
-                "fb": [
-                    {
-                        "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/suk/homeubuntucppgitv-controla.out.txt",
-                        "filepath": "a.out"
-                    },
-                    {
-                        "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/suk/homeubuntucppgitv-controla.out.txt.txt",
-                        "filepath": "a.out.txt"
-                    },
-                    {
-                        "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/suk/homeubuntucppgitv-controlcommandline.cpp.txt",
-                        "filepath": "commandline.cpp"
-                    },
-                    {
-                        "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/suk/homeubuntucppgitv-controldiff.cpp.txt",
-                        "filepath": "diff.cpp"
-                    },
-                    {
-                        "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/suk/homeubuntucppgitv-controlfile.cpp.txt",
-                        "filepath": "file.cpp"
-                    },
-                    {
-                        "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/suk/homeubuntucppgitv-controljson.hpp.txt",
-                        "filepath": "json.hpp"
-                    },
-                    {
-                        "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/suk/homeubuntucppgitv-controlsha.cpp.txt",
-                        "filepath": "sha.cpp"
-                    },
-                    {
-                        "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/suk/homeubuntucppgitv-controltree.cpp.txt",
-                        "filepath": "tree.cpp"
-                    }
-                ],
-                "next": {
-                    "commit_name": "jib",
-                    "fb": [
-                        {
-                            "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/jib/homeubuntucppgitv-controla.out.txt",
-                            "filepath": "a.out"
-                        },
-                        {
-                            "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/jib/homeubuntucppgitv-controla.out.txt.txt",
-                            "filepath": "a.out.txt"
-                        },
-                        {
-                            "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/jib/homeubuntucppgitv-controlcommandline.cpp.txt",
-                            "filepath": "commandline.cpp"
-                        },
-                        {
-                            "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/jib/homeubuntucppgitv-controldiff.cpp.txt",
-                            "filepath": "diff.cpp"
-                        },
-                        {
-                            "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/jib/homeubuntucppgitv-controlfile.cpp.txt",
-                            "filepath": "file.cpp"
-                        },
-                        {
-                            "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/jib/homeubuntucppgitv-controljson.hpp.txt",
-                            "filepath": "json.hpp"
-                        },
-                        {
-                            "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/jib/homeubuntucppgitv-controlsha.cpp.txt",
-                            "filepath": "sha.cpp"
-                        },
-                        {
-                            "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/jib/homeubuntucppgitv-controltree.cpp.txt",
-                            "filepath": "tree.cpp"
-                        }
-                    ],
-                    "next": {
-                        "commit_name": "jib",
-                        "fb": [
-                            {
-                                "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/jib/a.out.txt",
-                                "filepath": "a.out"
-                            },
-                            {
-                                "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/jib/a.out.txt.txt",
-                                "filepath": "a.out.txt"
-                            },
-                            {
-                                "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/jib/commandline.cpp.txt",
-                                "filepath": "commandline.cpp"
-                            },
-                            {
-                                "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/jib/diff.cpp.txt",
-                                "filepath": "diff.cpp"
-                            },
-                            {
-                                "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/jib/file.cpp.txt",
-                                "filepath": "file.cpp"
-                            },
-                            {
-                                "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/jib/json.hpp.txt",
-                                "filepath": "json.hpp"
-                            },
-                            {
-                                "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/jib/sha.cpp.txt",
-                                "filepath": "sha.cpp"
-                            },
-                            {
-                                "f_name": "/home/ubuntu/cppgit/v-control/.pgit/diff/jib/tree.cpp.txt",
-                                "filepath": "tree.cpp"
-                            }
-                        ]
-                    }
-                }
-            }
-        }
+        ]
     }
 }

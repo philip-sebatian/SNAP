@@ -35,31 +35,21 @@
 +0$/*int main()
 +0$
 +0$}
-+0$    }
-+0$        return tree;
-+0$        tree.traverse_make_tree_obj(fs::current_path());
-+0$        tree = Treeobject();
-+0$    {
-+0$    else
-+0$    }
++0$    
 +0$        return tree;
 +0$        tree = Treeobject::from_json(tree_json);
 +0$        file.close();
 +0$        // Close the file
 +0$
 +0$        file >> tree_json;
-+0$    {
-+0$    if (!size == 0)
-+0$    std::cout << (fs::current_path() / fs::path(".pgit") / fs::path("tree.json")).string() << std::endl;
 +0$
 +0$    Treeobject tree;
 +0$    file.seekg(0, std::ios::beg);
-+0$    std::streampos size = file.tellg();
-+0$    file.seekg(0, std::ios::end);
++0$
 +0$    std::ifstream file((fs::current_path() / fs::path(".pgit") / fs::path("tree.json")).string());
 +0$    json tree_json;
 +0${
-+0$Treeobject loadTreeobject()
++0$Treeobject loadTreeobject(std::string commit)
 +0$
 +0$};
 +0$    }
@@ -72,8 +62,10 @@
 +0$        std::ofstream file(path);
 +0$        auto path = (fs::current_path() / fs::path(".pgit") / fs::path("tree.json")).string();
 +0$        auto tree_json = head->to_json();
-+0$        curr->next->traverse_make_tree_obj(fs::current_path());
-+0$        curr->next = std::make_shared<Treeobject>(Treeobject(name));
++0$        
++0$            curr->next->traverse_make_tree_obj(fs::current_path());
++0$            curr->next = std::make_shared<Treeobject>(Treeobject(name));
++0$        
 +0$        curr->make_fs();
 +0$        }
 +0$            curr = curr->next;
@@ -107,7 +99,7 @@
 +0$        }
 +0$            write_vector(vec, fs::current_path() / fs::path(".pgit") / fs::path("stage") / i.filepath);
 +0$            std::cout << "size=" << vec.size() << std::endl;
-+0$            auto vec = get_vector_from_delta(i.filepath.filename());
++0$            auto vec = get_vector_from_delta(i);
 +0$            std::cout << i.filepath << std::endl;
 +0$        {
 +0$        for (auto i : fb)
@@ -116,10 +108,10 @@
 +0$    {
 +0$    void make_fs()
 +0$    }
-+0$        fb.insert(file_blob(fs::relative(f_path, fs::current_path()), diff_base / fs::path(f_path.filename().string() + ".txt")));
++0$        fb.insert(file_blob(fs::relative(f_path, fs::current_path()), diff_base / fs::path(get_delta_fname(f_path.string())  + ".txt")));
 +0$
 +0$                                                                                                              ".txt"));
-+0$        write_delta_from_file_name(stage_file, f_path, diff_base / fs::path("" + f_path.filename().string() + ""
++0$        write_delta_from_file_name(stage_file, f_path, diff_base / fs::path("" + get_delta_fname(f_path.string()) + ""
 +0$
 +0$        write_fs_delta(file_struct_path / fs::path(this->commit_name + ".txt"));
 +0$        fs::path file_struct_path = fs::current_path() / fs::path(".pgit") / fs::path("file");
@@ -171,15 +163,15 @@
 +0$        {
 +0$        for (auto i : delta)
 +0$        std::cout << content.size() << std::endl;
-+0$        std::cout << "cccccc " << diff_base / fs::path(f_path.string() + ".txt") << std::endl;
-+0$        auto delta = get_content(diff_base / fs::path(f_path.string() + ".txt"));
++0$        std::cout << "cccccc " << diff_base / fs::path(ff.filepath.filename().string() + ".txt") << std::endl;
++0$        auto delta = get_content(ff.f_name);
 +0$        fs::path diff_base = fs::current_path() / fs::path(".pgit") / fs::path("diff") / fs::path(this->commit_name);
-+0$        std::cout << stage_base / f_path << std::endl;
++0$        std::cout << stage_base / ff.filepath.filename() << std::endl;
 +0$        std::cout << "////////////////////////////" << content.size() << std::endl;
-+0$        auto content = get_content(stage_base / f_path);
++0$        auto content = get_content(stage_base / ff.filepath);
 +0$        fs::path stage_base = fs::current_path() / fs::path(".pgit") / fs::path("stage");
 +0$    {
-+0$    std::vector<std::string> get_vector_from_delta(fs::path f_path)
++0$    std::vector<std::string> get_vector_from_delta(file_blob ff)
 +0$    // f_path path to relative
 +0$
 +0$    }
@@ -248,6 +240,17 @@
 +0$public:
 +0${
 +0$class Treeobject
++0$
++0$}
++0$    return str;
++0$    }
++0$        str+=i;
++0$        }
++0$            continue;
++0$        if(i=='/'){
++0$    for(auto i : path){
++0$    std::string str="";
++0$std::string get_delta_fname(std::string path){
 +0$
 +0$};
 +0$    }
