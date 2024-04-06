@@ -26,8 +26,11 @@ g++ commandline.cpp
 echo 'pgit() {
     /path/to/a.out "$@"
 }' >> ~/.bashrc
+```
+
 
 5. Source the .bashrc:
 ```bash
 source ~/.bashrc
+```
 
