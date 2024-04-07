@@ -1,0 +1,7 @@
+/home/ubuntu/v-control/out/build/CMakeFiles/SNAP.dir
+/home/ubuntu/v-control/out/build/CMakeFiles/edit_cache.dir
+/home/ubuntu/v-control/out/build/CMakeFiles/rebuild_cache.dir
+/home/ubuntu/v-control/out/build/CMakeFiles/list_install_components.dir
+/home/ubuntu/v-control/out/build/CMakeFiles/install.dir
+/home/ubuntu/v-control/out/build/CMakeFiles/install/local.dir
+/home/ubuntu/v-control/out/build/CMakeFiles/install/strip.dir
