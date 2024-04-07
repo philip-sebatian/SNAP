@@ -36,13 +36,26 @@ public:
     }
 };
 
-std::string get_delta_fname(std::string path){
-    std::string str="";
-    for(auto i : path){
-        if(i=='/'){
+std::string removeExtension(const std::string& filename) {
+    size_t lastDotPos = filename.find_last_of(".");
+    if (lastDotPos != std::string::npos) {
+        return filename.substr(0, lastDotPos);
+    }
+    // If no extension found, return the original filename
+    return filename;
+}
+
+
+std::string get_delta_fname(std::string path)
+{
+    std::string str = "";
+    for (auto i : path)
+    {
+        if (i == '/')
+        {
             continue;
         }
-        str+=i;
+        str += i;
     }
     return str;
 }
@@ -159,10 +172,9 @@ public:
     void insert_blob(fs::path f_path)
     {
         std::string stage_path = fs::current_path() / fs::path(".pgit") / fs::path("stage"); // this acts as base to the stage file change it
-        
+
         std::string stage_file = stage_path / fs::relative(f_path, fs::current_path());
 
-      
         fs::path diff_base = fs::current_path() / fs::path(".pgit") / fs::path("diff") / fs::path(this->commit_name);
         if (!fs::exists(diff_base))
         {
@@ -172,9 +184,9 @@ public:
         write_fs_delta(file_struct_path / fs::path(this->commit_name + ".txt"));
 
         write_delta_from_file_name(stage_file, f_path, diff_base / fs::path("" + get_delta_fname(f_path.string()) + ""
-                                                                                                              ".txt"));
+                                                                                                                    ".txt"));
 
-        fb.insert(file_blob(fs::relative(f_path, fs::current_path()), diff_base / fs::path(get_delta_fname(f_path.string())  + ".txt")));
+        fb.insert(file_blob(fs::relative(f_path, fs::current_path()), diff_base / fs::path(get_delta_fname(f_path.string()) + ".txt")));
     }
     void make_fs()
     {
@@ -226,20 +238,22 @@ public:
         while (curr->next != nullptr)
         {
             curr->make_fs();
-            if(curr->commit_name==name){
-                std::cout<<"snapshot not taken . snap with same name exits"<<std::endl;
+            if (curr->commit_name == name)
+            {
+                std::cout << "snapshot not taken . snap with same name exits" << std::endl;
                 return;
             }
             curr = curr->next;
         }
         curr->make_fs();
-            if(curr->commit_name==name){
-                std::cout<<"snapshot not taken . snap with same name exits"<<std::endl;
-                return ;
-            }
-            curr->next = std::make_shared<Treeobject>(Treeobject(name));
-            curr->next->traverse_make_tree_obj(fs::current_path());
-        
+        if (curr->commit_name == name)
+        {
+            std::cout << "snapshot not taken . snap with same name exits" << std::endl;
+            return;
+        }
+        curr->next = std::make_shared<Treeobject>(Treeobject(name));
+        curr->next->traverse_make_tree_obj(fs::current_path());
+
         auto tree_json = head->to_json();
         auto path = (fs::current_path() / fs::path(".pgit") / fs::path("tree.json")).string();
         std::ofstream file(path);
@@ -251,22 +265,29 @@ public:
         }
     }
 
-    void roll_back(std::string name){
-        auto curr= std::make_shared<Treeobject>(*this);
-        auto head =curr;
-        for(const auto &entry : fs::directory_iterator(fs::current_path())){
-            if(entry.path().filename().string()[0]!='.'){
+    void roll_back(std::string name)
+    {
+        std::set<std::string> inclusion_set;
+        auto curr = std::make_shared<Treeobject>(*this);
+        auto head = curr;
+        for (const auto &entry : fs::directory_iterator(fs::current_path()))
+        {
+            if (entry.path().filename().string()[0] != '.')
+            {
                 fs::remove_all(entry);
             }
         }
-        while(curr->commit_name!=name && curr!=nullptr){
+        while (curr->commit_name != name && curr != nullptr)
+        {
             curr->make_fs_cc(fs::current_path());
-            curr=curr->next;
-
+            inclusion_set.insert(curr->commit_name);
+            curr = curr->next;
         }
-        if(curr!=nullptr){
+        if (curr != nullptr)
+        {
             curr->make_fs_cc(fs::current_path());
-            curr->next=nullptr;
+            inclusion_set.insert(curr->commit_name);
+            curr->next = nullptr;
         }
         auto tree_json = head->to_json();
         auto path = (fs::current_path() / fs::path(".pgit") / fs::path("tree.json")).string();
@@ -277,7 +298,16 @@ public:
         {
             fs::remove_all(entry);
         }
-
+        for(const auto &entry : fs::directory_iterator(fs::current_path()/fs::path(".pgit")/fs::path("diff"))){
+            if(inclusion_set.find(entry.path().filename().string())==inclusion_set.end()){
+                fs::remove_all(entry);
+            }
+        }
+        for(const auto &entry : fs::directory_iterator(fs::current_path()/fs::path(".pgit")/fs::path("file"))){
+            if(inclusion_set.find(removeExtension(entry.path().filename().string()))==inclusion_set.end()){
+                fs::remove_all(entry);
+            }
+        }
     }
 };
 
@@ -289,12 +319,10 @@ Treeobject loadTreeobject(std::string commit)
     file.seekg(0, std::ios::beg);
     Treeobject tree;
 
-        file >> tree_json;
+    file >> tree_json;
 
-        // Close the file
-        file.close();
-        tree = Treeobject::from_json(tree_json);
-        return tree;
-    
+    // Close the file
+    file.close();
+    tree = Treeobject::from_json(tree_json);
+    return tree;
 }
-
