@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/SNAP.dir/commandline.cpp.o -o SNAP 
+/usr/bin/c++ CMakeFiles/SNAP.dir/main.cpp.o -o SNAP 

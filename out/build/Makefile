@@ -174,29 +174,29 @@ SNAP/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SNAP.dir/build.make CMakeFiles/SNAP.dir/build
 .PHONY : SNAP/fast
 
-commandline.o: commandline.cpp.o
-.PHONY : commandline.o
+main.o: main.cpp.o
+.PHONY : main.o
 
 # target to build an object file
-commandline.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SNAP.dir/build.make CMakeFiles/SNAP.dir/commandline.cpp.o
-.PHONY : commandline.cpp.o
+main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SNAP.dir/build.make CMakeFiles/SNAP.dir/main.cpp.o
+.PHONY : main.cpp.o
 
-commandline.i: commandline.cpp.i
-.PHONY : commandline.i
+main.i: main.cpp.i
+.PHONY : main.i
 
 # target to preprocess a source file
-commandline.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SNAP.dir/build.make CMakeFiles/SNAP.dir/commandline.cpp.i
-.PHONY : commandline.cpp.i
+main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SNAP.dir/build.make CMakeFiles/SNAP.dir/main.cpp.i
+.PHONY : main.cpp.i
 
-commandline.s: commandline.cpp.s
-.PHONY : commandline.s
+main.s: main.cpp.s
+.PHONY : main.s
 
 # target to generate assembly for a file
-commandline.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SNAP.dir/build.make CMakeFiles/SNAP.dir/commandline.cpp.s
-.PHONY : commandline.cpp.s
+main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SNAP.dir/build.make CMakeFiles/SNAP.dir/main.cpp.s
+.PHONY : main.cpp.s
 
 # Help Target
 help:
@@ -211,9 +211,9 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... SNAP"
-	@echo "... commandline.o"
-	@echo "... commandline.i"
-	@echo "... commandline.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 .PHONY : help
 
 

@@ -69,28 +69,28 @@ include CMakeFiles/SNAP.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/SNAP.dir/flags.make
 
-CMakeFiles/SNAP.dir/commandline.cpp.o: CMakeFiles/SNAP.dir/flags.make
-CMakeFiles/SNAP.dir/commandline.cpp.o: /home/ubuntu/v-control/commandline.cpp
-CMakeFiles/SNAP.dir/commandline.cpp.o: CMakeFiles/SNAP.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/v-control/out/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SNAP.dir/commandline.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SNAP.dir/commandline.cpp.o -MF CMakeFiles/SNAP.dir/commandline.cpp.o.d -o CMakeFiles/SNAP.dir/commandline.cpp.o -c /home/ubuntu/v-control/commandline.cpp
+CMakeFiles/SNAP.dir/main.cpp.o: CMakeFiles/SNAP.dir/flags.make
+CMakeFiles/SNAP.dir/main.cpp.o: /home/ubuntu/v-control/main.cpp
+CMakeFiles/SNAP.dir/main.cpp.o: CMakeFiles/SNAP.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/v-control/out/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SNAP.dir/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SNAP.dir/main.cpp.o -MF CMakeFiles/SNAP.dir/main.cpp.o.d -o CMakeFiles/SNAP.dir/main.cpp.o -c /home/ubuntu/v-control/main.cpp
 
-CMakeFiles/SNAP.dir/commandline.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SNAP.dir/commandline.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/v-control/commandline.cpp > CMakeFiles/SNAP.dir/commandline.cpp.i
+CMakeFiles/SNAP.dir/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SNAP.dir/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/v-control/main.cpp > CMakeFiles/SNAP.dir/main.cpp.i
 
-CMakeFiles/SNAP.dir/commandline.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SNAP.dir/commandline.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/v-control/commandline.cpp -o CMakeFiles/SNAP.dir/commandline.cpp.s
+CMakeFiles/SNAP.dir/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SNAP.dir/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/v-control/main.cpp -o CMakeFiles/SNAP.dir/main.cpp.s
 
 # Object files for target SNAP
 SNAP_OBJECTS = \
-"CMakeFiles/SNAP.dir/commandline.cpp.o"
+"CMakeFiles/SNAP.dir/main.cpp.o"
 
 # External object files for target SNAP
 SNAP_EXTERNAL_OBJECTS =
 
-SNAP: CMakeFiles/SNAP.dir/commandline.cpp.o
+SNAP: CMakeFiles/SNAP.dir/main.cpp.o
 SNAP: CMakeFiles/SNAP.dir/build.make
 SNAP: CMakeFiles/SNAP.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ubuntu/v-control/out/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable SNAP"

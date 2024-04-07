@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/SNAP.dir/commandline.cpp.o"
-  "CMakeFiles/SNAP.dir/commandline.cpp.o.d"
+  "CMakeFiles/SNAP.dir/main.cpp.o"
+  "CMakeFiles/SNAP.dir/main.cpp.o.d"
   "SNAP"
   "SNAP.pdb"
 )

@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/ubuntu/v-control/commandline.cpp" "CMakeFiles/SNAP.dir/commandline.cpp.o" "gcc" "CMakeFiles/SNAP.dir/commandline.cpp.o.d"
+  "/home/ubuntu/v-control/main.cpp" "CMakeFiles/SNAP.dir/main.cpp.o" "gcc" "CMakeFiles/SNAP.dir/main.cpp.o.d"
   )
 
 # Targets to which this target links.
