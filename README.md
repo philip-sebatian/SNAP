@@ -7,12 +7,12 @@
 # INSTALLATION
 
 1. Clone the repository using:
-git clone https://github.com/philip-sebatian/v-control
+git clone https://github.com/philip-sebatian/SNAP
 
 
 
 2. Navigate to the cloned repository:
-cd v-control
+cd SNAP
 
 
 
