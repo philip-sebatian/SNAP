@@ -11,7 +11,6 @@ bool check()
     return false;
 }
 
-
 void init()
 {
     if (check())
@@ -31,7 +30,12 @@ void init()
 }
 int main(int argc, char *argv[])
 {
-    std::cout << argv[1] << std::endl;
+    if(argc==1){
+        std::cout<<"enter a command"<<std::endl;
+        return 1;
+    }
+
+
     if (std::strcmp(argv[1], "snapshot") == 0)
     {
         if (!check())
@@ -64,14 +68,14 @@ int main(int argc, char *argv[])
 
             else
             {
-                auto j = loadTreeobject(argv[2]);
+                auto j = loadTreeobject();
 
                 j.snapshot(argv[2]);
             }
         }
         else
         {
-            std::cout << "invalid number of arguments for command" << std::endl;
+            std::cout << "invalid  command" << std::endl;
         }
     }
     else if (std::strcmp(argv[1], "init") == 0)
@@ -82,28 +86,71 @@ int main(int argc, char *argv[])
         }
         else
         {
-            std::cout << "invalid number of arguments for command" << std::endl;
+            std::cout << "invalid command" << std::endl;
         }
     }
-    else if(std::strcmp(argv[1], "rollback") == 0){
+    else if (std::strcmp(argv[1], "rollback") == 0)
+    {
         if (argc == 3)
         {
+            if (!fs::exists(fs::current_path() / fs::path(".pgit") / fs::path("tree.json")))
+            {
+                std::fstream ff;
+                ff.open(fs::current_path() / fs::path(".pgit") / fs::path("tree.json"), std::ios::out | std::ios::trunc);
+                ff.close();
+            }
             std::fstream file((fs::current_path() / fs::path(".pgit") / fs::path("tree.json")).string());
             file.seekg(0, std::ios::end);
             std::streampos size = file.tellg();
             file.seekg(0, std::ios::beg);
-            if(size==0){
-                std::cout<<"no commits made to roll back"<<std::endl;
+            if (size == 0)
+            {
+                std::cout << "no commits made to roll back" << std::endl;
             }
-            else{
-                auto j = loadTreeobject(argv[2]);
+            else
+            {
+                auto j = loadTreeobject();
 
                 j.roll_back(argv[2]);
             }
         }
         else
         {
-            std::cout << "invalid number of arguments for command" << std::endl;
+            std::cout << "invalid  command" << std::endl;
         }
+    }
+    else if (std::strcmp(argv[1], "log") == 0)
+    {
+        if (argc == 2)
+        {
+            if (!fs::exists(fs::current_path() / fs::path(".pgit") / fs::path("tree.json")))
+            {
+                std::fstream ff;
+                ff.open(fs::current_path() / fs::path(".pgit") / fs::path("tree.json"), std::ios::out | std::ios::trunc);
+                ff.close();
+            }
+            std::fstream file((fs::current_path() / fs::path(".pgit") / fs::path("tree.json")).string());
+            file.seekg(0, std::ios::end);
+            std::streampos size = file.tellg();
+            file.seekg(0, std::ios::beg);
+            if (size == 0)
+            {
+                std::cout << "no commits exists" << std::endl;
+            }
+            else
+            {
+                auto j = loadTreeobject();
+
+                j.log();
+            }
+        }
+        else
+        {
+            std::cout << "invalid  command" << std::endl;
+        }
+    }
+     
+    else{
+        std::cout<<"invalid command"<<std::endl;
     }
 }

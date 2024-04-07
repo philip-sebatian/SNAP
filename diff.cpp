@@ -217,7 +217,7 @@ void write_delta_from_actionstk(std::string fname, std::deque<actions> stk)
         ff << str;
     }
     ff.close();
-    std::cout << "finished writing" << std::endl;
+    
 }
 void write_delta_from_file_name(std::string f1, std::string f2, std::string delta)
 {
@@ -226,7 +226,7 @@ void write_delta_from_file_name(std::string f1, std::string f2, std::string delt
     lines1 = get_content(f1);
     lines2 = get_content(f2);
     std::vector<std::vector<int>> dp = calc(lines1, lines2);
-   
+
     std::deque<actions> ssk = get_actions(dp, lines1, lines2);
     write_delta_from_actionstk(delta, ssk);
 }
@@ -236,7 +236,7 @@ void create_change(std::set<fs::path> file_s, fs::path base)
 {
     std::set<fs::path> c_flst;
     traverse(base, c_flst);
-    
+
     for (const auto &i : file_s)
     {
 

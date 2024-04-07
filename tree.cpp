@@ -218,7 +218,7 @@ public:
 
         for (const auto &entry : fs::directory_iterator(root))
         {
-            std::cout << entry.path() << std::endl;
+            
             if (fs::is_regular_file(entry))
 
                 insert_blob(entry.path());
@@ -309,9 +309,19 @@ public:
             }
         }
     }
+
+    void log(){
+        auto curr = std::make_shared<Treeobject>(*this);
+        std::cout<<"current logs : "<<std::endl;
+        while(curr!=nullptr){
+            std::cout<<"-"<<curr->commit_name<<std::endl;
+            curr=curr->next;
+        }
+
+    }
 };
 
-Treeobject loadTreeobject(std::string commit)
+Treeobject loadTreeobject()
 {
     json tree_json;
     std::ifstream file((fs::current_path() / fs::path(".pgit") / fs::path("tree.json")).string());
