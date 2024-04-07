@@ -17,7 +17,7 @@ cd SNAP/out/build
 
 
 3. Compile the code using the following command:
-g++ sudo make install
+sudo make install
 
 
 
